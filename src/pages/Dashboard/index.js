@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import {
   Switch,
   Route,
@@ -17,10 +17,25 @@ import Payment from "./Payment";
 import Hotel from "./Hotel";
 import Activities from "./Activities";
 import Certificate from "./Certificate";
+import useApi from "../../hooks/useApi";
+
+import UserContext from "../../contexts/UserContext";
 
 export default function Dashboard() {
   const { eventInfo } = useContext(EventInfoContext);
+  const { setUserData } = useContext(UserContext);
   const match = useRouteMatch();
+  const { enrollment } = useApi();
+
+  useEffect(() => {
+    enrollment.getPersonalInformations().then(response => {
+      if (response.data) {
+        setUserData((userData) => ({ ...userData, fullRegistration: true }));
+      } else {
+        setUserData((userData) => ({ ...userData, fullRegistration: false }));
+      }
+    });
+  }, []);
 
   return (
     <DashboardLayout background={eventInfo.backgroundImage}>
