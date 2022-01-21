@@ -27,9 +27,9 @@ export default function PaymentForm() {
 
     onSubmit: (data) => {
       const newData = {
-        cardNumber: data.cardNumber,
+        number: data.number,
         name: data.name,
-        validThru: data.validThru,
+        expiry: data.expiry,
         cvc: data.cvc,
       };
 
@@ -38,12 +38,24 @@ export default function PaymentForm() {
     },
 
     initialValues: {
-      cardNumber: "",
+      number: "",
       name: "",
-      validThru: "",
+      expiry: "",
       cvc: "",
+      focus: ""
     },
   });
+
+  const handleChangeSelection = (key) => (e) => {
+    const focus = {
+      target: {
+        value: key
+      }
+    };
+
+    console.log(key);
+    handleChange("focus")(focus);
+  };
 
   return (
     <FormWrapper onSubmit={handleSubmit}>
@@ -51,10 +63,10 @@ export default function PaymentForm() {
 
         <Cards
           cvc={data.cvc}
-          expiry={data.validThru}
-          focused={true}
+          expiry={data.expiry}
+          focused={data.focus}
           name={data.name}
-          number={data.cardNumber}
+          number={data.number}
         />
       </ContainerCard>
 
@@ -62,14 +74,15 @@ export default function PaymentForm() {
         <InputWrapper>
           <Input
             label="Card Number"
-            name="cardNumber"
+            name="number"
             type="text"
             style = {{ width: "100%" }}
             mask="9999 9999 9999 9999"
-            value={data.cardNumber || ""}
-            onChange={handleChange("cardNumber")}
+            value={data.number || ""}
+            onChange={handleChange("number")}
+            onSelect={handleChangeSelection("number")}
           />
-          {errors.cardNumber && <ErrorMsg>{errors.cardNumber}</ErrorMsg>}
+          {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
         </InputWrapper>
         <InputWrapper>
           <Input
@@ -79,6 +92,7 @@ export default function PaymentForm() {
             style = {{ width: "100%" }}
             value={data.name || ""}
             onChange={handleChange("name")}
+            onSelect={handleChangeSelection("name")}
           />
           {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
         </InputWrapper>
@@ -87,7 +101,7 @@ export default function PaymentForm() {
           <InputWrapper>
             <Input
               label="Valid Thru"
-              name="validThru"
+              name="expiry"
               type="text"
               style = {{ width: "100%" }}
               mask="19/99"
@@ -95,10 +109,11 @@ export default function PaymentForm() {
                 "1": "[0-1]",
                 "9": "[0-9]",
               }}
-              value={data.validThru || ""}
-              onChange={handleChange("validThru")}
+              value={data.expiry || ""}
+              onChange={handleChange("expiry")}
+              onSelect={handleChangeSelection("expiry")}
             />
-            {errors.validThru && <ErrorMsg>{errors.validThru}</ErrorMsg>}
+            {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
           </InputWrapper>
 
           <InputWrapper
@@ -112,6 +127,7 @@ export default function PaymentForm() {
               style = {{ width: "90%", marginLeft: "10%" }}
               value={data.cvc || ""}
               onChange={handleChange("cvc")}
+              onSelect={handleChangeSelection("cvc")}
             />
             {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
           </InputWrapper>
