@@ -4,15 +4,21 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
 
+import PaymentForm from "../../../components/PaymentForm";
+
 export default function Payment() {
   const { userData } = useContext(UserContext);
-
+  /*
+    Card name
+    Name
+    valid thru - cvc
+  */
   return (
     <>
       <StyledTypography variant="h4"> Ingresso e pagamento </StyledTypography>
       {userData.fullRegistration ? (
         <>
-          Em breve!
+          <PaymentForm />
         </>
       ) : (
         <UnauthorizedMessage>
