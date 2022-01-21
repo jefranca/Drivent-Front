@@ -11,6 +11,9 @@ import { InputWrapper } from "./InputWrapper";
 import { ErrorMsg } from "./ErrorMsg";
 import FormValidations from "./FormValidations";
 
+import Cards from "react-credit-cards";
+import "react-credit-cards/es/styles-compiled.css";
+
 export default function PaymentForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
 
@@ -19,8 +22,6 @@ export default function PaymentForm() {
     handleChange,
     data,
     errors,
-    setData,
-    customHandleChange,
   } = useForm({
     validations: FormValidations,
 
@@ -39,14 +40,25 @@ export default function PaymentForm() {
     initialValues: {
       cardNumber: "",
       name: "",
-      validThru: null,
+      validThru: "",
       cvc: "",
     },
   });
 
   return (
-    <>
-      <FormWrapper onSubmit={handleSubmit}>
+    <FormWrapper onSubmit={handleSubmit}>
+      <ContainerCard>
+
+        <Cards
+          cvc={data.cvc}
+          expiry={data.validThru}
+          focused={true}
+          name={data.name}
+          number={data.cardNumber}
+        />
+      </ContainerCard>
+
+      <Container>
         <InputWrapper>
           <Input
             label="Card Number"
@@ -104,14 +116,14 @@ export default function PaymentForm() {
             {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
           </InputWrapper>
         </MultiInputWrapper>
-          
-        <SubmitContainer>
-          <Button type="submit" disabled={dynamicInputIsLoading}>
-              Salvar
-          </Button>
-        </SubmitContainer>
-      </FormWrapper>
-    </>
+      </Container>
+
+      <SubmitContainer>
+        <Button type="submit" disabled={dynamicInputIsLoading}>
+            Finalizar Pagamento
+        </Button>
+      </SubmitContainer>
+    </FormWrapper>
   );
 }
 
@@ -128,4 +140,16 @@ const MultiInputWrapper = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: space-around;
+`;
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const ContainerCard = styled.div`
+  display: flex;
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+  width: 290px !important;
 `;
