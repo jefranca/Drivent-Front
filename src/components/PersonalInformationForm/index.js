@@ -21,9 +21,13 @@ import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
 
+import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
+
 dayjs.extend(CustomParseFormat);
 
 export default function PersonalInformationForm() {
+  const { setUserData } = useContext(UserContext);
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
   const { enrollment, cep } = useApi();
 
@@ -56,6 +60,7 @@ export default function PersonalInformationForm() {
 
       enrollment.save(newData).then(() => {
         toast("Salvo com sucesso!");
+        setUserData((userData) => ({ ...userData, fullRegistration: true }));
       }).catch((error) => {
         if (error.response?.data?.details) {
           for (const detail of error.response.data.details) {
