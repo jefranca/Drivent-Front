@@ -1,19 +1,21 @@
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
 import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
+import { useContext } from "react";
+import UserContext from "../../../contexts/UserContext";
 
 export default function Hotel() {
-  const isPaid = false;
+  const { userData } = useContext(UserContext);
 
   return (
     <>
       <StyledTypography variant="h4"> Ingresso e pagamento </StyledTypography>
-      {isPaid ? (
+      {userData.isPaid ? (
         <>Em breve!</>
       ) : (
         <UnauthorizedMessage>
-          Você precisa completar o pagamento antes de prosseguir pra escolha
-          de ingresso
+          Você precisa completar o pagamento antes de prosseguir pra escolha de
+          ingresso
         </UnauthorizedMessage>
       )}
     </>
