@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import styled from "styled-components";
 import { toast } from "react-toastify";
+import Typography from "@material-ui/core/Typography";
 
 import { useForm } from "../../hooks/useForm";
 
@@ -13,6 +14,8 @@ import FormValidations from "./FormValidations";
 
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
+
+import { Ticket } from "./Ticket";
 
 export default function PaymentForm() {
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
@@ -53,95 +56,110 @@ export default function PaymentForm() {
       }
     };
 
-    console.log(key);
     handleChange("focus")(focus);
   };
 
   return (
-    <FormWrapper onSubmit={handleSubmit}>
-      <ContainerCard>
+    <PaymentContainer>
+      <SubTitle variant="h6"> Ingresso </SubTitle>
+      <Ticket 
+        type="Presencial + Com Hotel"
+        value="R$ 600"
+      />
+      <SubTitle variant="h6"> Pagamento </SubTitle>
+      <FormWrapper onSubmit={handleSubmit}>
+        <ContainerCard>
 
-        <Cards
-          cvc={data.cvc}
-          expiry={data.expiry}
-          focused={data.focus}
-          name={data.name}
-          number={data.number}
-        />
-      </ContainerCard>
-
-      <Container>
-        <InputWrapper>
-          <Input
-            label="Card Number"
-            name="number"
-            type="text"
-            style = {{ width: "100%" }}
-            mask="9999 9999 9999 9999"
-            value={data.number || ""}
-            onChange={handleChange("number")}
-            onSelect={handleChangeSelection("number")}
+          <Cards
+            cvc={data.cvc}
+            expiry={data.expiry}
+            focused={data.focus}
+            name={data.name}
+            number={data.number}
           />
-          {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
-        </InputWrapper>
-        <InputWrapper>
-          <Input
-            label="Name"
-            name="name"
-            type="text"
-            style = {{ width: "100%" }}
-            value={data.name || ""}
-            onChange={handleChange("name")}
-            onSelect={handleChangeSelection("name")}
-          />
-          {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
-        </InputWrapper>
+        </ContainerCard>
 
-        <MultiInputWrapper>
+        <ContainerFields>
           <InputWrapper>
             <Input
-              label="Valid Thru"
-              name="expiry"
+              label="Card Number"
+              name="number"
               type="text"
               style = {{ width: "100%" }}
-              mask="19/99"
-              formatChars= {{
-                "1": "[0-1]",
-                "9": "[0-9]",
-              }}
-              value={data.expiry || ""}
-              onChange={handleChange("expiry")}
-              onSelect={handleChangeSelection("expiry")}
+              maxLength = "20"
+              mask="9999 9999 9999 9999"
+              value={data.number || ""}
+              onChange={handleChange("number")}
+              onSelect={handleChangeSelection("number")}
             />
-            {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
+            {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
           </InputWrapper>
-
-          <InputWrapper
-            width="50%"
-          >
+          <InputWrapper>
             <Input
-              label="CVC"
-              mask="999"
-              name="cvc"
+              label="Name"
+              name="name"
               type="text"
-              style = {{ width: "90%", marginLeft: "10%" }}
-              value={data.cvc || ""}
-              onChange={handleChange("cvc")}
-              onSelect={handleChangeSelection("cvc")}
+              style = {{ width: "100%" }}
+              value={data.name || ""}
+              onChange={handleChange("name")}
+              onSelect={handleChangeSelection("name")}
             />
-            {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
+            {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
           </InputWrapper>
-        </MultiInputWrapper>
-      </Container>
 
-      <SubmitContainer>
-        <Button type="submit" disabled={dynamicInputIsLoading}>
+          <MultiInputWrapper>
+            <InputWrapper>
+              <Input
+                label="Valid Thru"
+                name="expiry"
+                type="text"
+                style = {{ width: "100%" }}
+                mask="19/99"
+                formatChars= {{
+                  "1": "[0-1]",
+                  "9": "[0-9]",
+                }}
+                value={data.expiry || ""}
+                onChange={handleChange("expiry")}
+                onSelect={handleChangeSelection("expiry")}
+              />
+              {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
+            </InputWrapper>
+
+            <InputWrapper
+              width="50%"
+            >
+              <Input
+                label="CVC"
+                mask="999"
+                name="cvc"
+                type="text"
+                style = {{ width: "90%", marginLeft: "10%" }}
+                value={data.cvc || ""}
+                onChange={handleChange("cvc")}
+                onSelect={handleChangeSelection("cvc")}
+              />
+              {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
+            </InputWrapper>
+          </MultiInputWrapper>
+        </ContainerFields>
+
+        <SubmitContainer>
+          <Button type="submit" disabled={dynamicInputIsLoading}>
             Finalizar Pagamento
-        </Button>
-      </SubmitContainer>
-    </FormWrapper>
+          </Button>
+        </SubmitContainer>
+      </FormWrapper>
+    </PaymentContainer>
+
   );
 }
+
+const SubTitle = styled(Typography)`
+  margin-bottom: 20px !important;
+  color: #8E8E8E;
+
+`;
 
 const SubmitContainer = styled.div`
   margin-top: 40px!important;
@@ -158,9 +176,18 @@ const MultiInputWrapper = styled.div`
   align-items: space-around;
 `;
 
-const Container = styled.div`
+const PaymentContainer = styled.div`
   display: flex;
   flex-direction: column;
+`;
+
+const ContainerFields = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 750px) {
+    width: 100% !important;
+  }
 `;
 
 const ContainerCard = styled.div`
@@ -168,4 +195,13 @@ const ContainerCard = styled.div`
   justify-content: flex-start !important;
   align-items: flex-start !important;
   width: 290px !important;
+
+  @media (max-width: 750px) {
+    display: none;
+  }
+
+  @media (max-width: 600px) {
+    display: flex;
+    margin-bottom: 10px !important;
+  }
 `;

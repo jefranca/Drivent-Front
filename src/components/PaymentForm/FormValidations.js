@@ -1,7 +1,7 @@
 const validations = {
-  cardNumber: {
+  number: {
     custom: {
-      isValid: (value) => parseInt(value?.length, 10) === 14,
+      isValid: (value) => value?.length === 20,
       message: "Digite um número de cartão de crédito válido",
     },
   },
@@ -13,9 +13,13 @@ const validations = {
     },
   },
 
-  validThru: {
+  expiry: {
     custom: {
-      isValid: (value) => !value || !isNaN(new Date(value?.split("-").reverse().join("-"))),
+      isValid: (value) => {
+        console.log(value);
+
+        return  !value || !isNaN(new Date(value?.split("-").reverse().join("-")));
+      },
       message: "Selecione uma data de validade",
     },
   },
