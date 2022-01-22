@@ -1,7 +1,7 @@
 const validations = {
   number: {
     custom: {
-      isValid: (value) => value?.length === 20,
+      isValid: (value) => value?.length === 19,
       message: "Digite um número de cartão de crédito válido",
     },
   },

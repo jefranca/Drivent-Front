@@ -8,6 +8,8 @@ export const Ticket = ({ type, value }) => {
         {type}
       </Type>
       <Value>
+        R$
+        {" "}
         {value}
       </Value>
     </TicketBody>
@@ -21,8 +23,6 @@ const TicketBody = styled.div`
   justify-content: center;
   width: 290px;
   height: 108px;
-  left: 330px;
-  top: 292px;
   margin-bottom: 20px;
 
   background: #FFEED2;

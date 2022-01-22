@@ -30,9 +30,25 @@ export default function Dashboard() {
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
       if (response.data) {
-        setUserData((userData) => ({ ...userData, fullRegistration: true }));
+        setUserData((userData) => ({ 
+          ...userData, 
+          fullRegistration: true,
+          subscription: {
+            type: 1,
+            price: 600,
+            isPaid: false,
+          } 
+        }));
       } else {
-        setUserData((userData) => ({ ...userData, fullRegistration: false }));
+        setUserData((userData) => ({
+          ...userData, 
+          fullRegistration: false,
+          subscription: {
+            type: 1,
+            price: 600,
+            isPaid: false,
+          } 
+        }));
       }
     });
   }, []);

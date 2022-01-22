@@ -1,4 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
+import { useContext } from "react";
+import UserContext from "../../contexts/UserContext";
+
 import styled from "styled-components";
 import { toast } from "react-toastify";
 import Typography from "@material-ui/core/Typography";
@@ -16,10 +19,19 @@ import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
 import { Ticket } from "./Ticket";
+import { Confirmation } from "./Confirmation";
 
 export default function PaymentForm() {
-  const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
+  const { userData, setUserData } = useContext(UserContext);
+  const ticketTypes = {
+    0: "Presencial",
+    1: "Presencial + Com Hotel",
+    2: "Online"
+  };
+  const ticketType = ticketTypes[userData.subscription.type];
 
+  const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
+  
   const {
     handleSubmit,
     handleChange,
@@ -28,16 +40,15 @@ export default function PaymentForm() {
   } = useForm({
     validations: FormValidations,
 
-    onSubmit: (data) => {
-      const newData = {
-        number: data.number,
-        name: data.name,
-        expiry: data.expiry,
-        cvc: data.cvc,
-      };
-
-      toast("Salvo com sucesso!");
-      console.log(newData);
+    onSubmit: () => {
+      toast("Pago com sucesso!");
+      setUserData((userData) => ({
+        ...userData,
+        subscription: {
+          ...userData.subscription,
+          isPaid: true,
+        }
+      }));
     },
 
     initialValues: {
@@ -63,93 +74,98 @@ export default function PaymentForm() {
     <PaymentContainer>
       <SubTitle variant="h6"> Ingresso </SubTitle>
       <Ticket 
-        type="Presencial + Com Hotel"
-        value="R$ 600"
+        type={ticketType}
+        value={userData.subscription.price}
       />
       <SubTitle variant="h6"> Pagamento </SubTitle>
-      <FormWrapper onSubmit={handleSubmit}>
-        <ContainerCard>
+      {!userData.subscription.isPaid ? (
+        <FormWrapper onSubmit={handleSubmit}>
+          <ContainerCard>
 
-          <Cards
-            cvc={data.cvc}
-            expiry={data.expiry}
-            focused={data.focus}
-            name={data.name}
-            number={data.number}
-          />
-        </ContainerCard>
-
-        <ContainerFields>
-          <InputWrapper>
-            <Input
-              label="Card Number"
-              name="number"
-              type="text"
-              style = {{ width: "100%" }}
-              maxLength = "20"
-              mask="9999 9999 9999 9999"
-              value={data.number || ""}
-              onChange={handleChange("number")}
-              onSelect={handleChangeSelection("number")}
+            <Cards
+              cvc={data.cvc}
+              expiry={data.expiry}
+              focused={data.focus}
+              name={data.name}
+              number={data.number}
             />
-            {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
-          </InputWrapper>
-          <InputWrapper>
-            <Input
-              label="Name"
-              name="name"
-              type="text"
-              style = {{ width: "100%" }}
-              value={data.name || ""}
-              onChange={handleChange("name")}
-              onSelect={handleChangeSelection("name")}
-            />
-            {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
-          </InputWrapper>
+          </ContainerCard>
 
-          <MultiInputWrapper>
+          <ContainerFields>
             <InputWrapper>
               <Input
-                label="Valid Thru"
-                name="expiry"
+                label="Card Number"
+                name="number"
                 type="text"
                 style = {{ width: "100%" }}
-                mask="19/99"
-                formatChars= {{
-                  "1": "[0-1]",
-                  "9": "[0-9]",
-                }}
-                value={data.expiry || ""}
-                onChange={handleChange("expiry")}
-                onSelect={handleChangeSelection("expiry")}
+                maxLength = "20"
+                mask="9999 9999 9999 9999"
+                value={data.number || ""}
+                onChange={handleChange("number")}
+                onSelect={handleChangeSelection("number")}
               />
-              {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
+              {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
             </InputWrapper>
-
-            <InputWrapper
-              width="50%"
-            >
+            <InputWrapper>
               <Input
-                label="CVC"
-                mask="999"
-                name="cvc"
+                label="Name"
+                name="name"
                 type="text"
-                style = {{ width: "90%", marginLeft: "10%" }}
-                value={data.cvc || ""}
-                onChange={handleChange("cvc")}
-                onSelect={handleChangeSelection("cvc")}
+                style = {{ width: "100%" }}
+                value={data.name || ""}
+                onChange={handleChange("name")}
+                onSelect={handleChangeSelection("name")}
               />
-              {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
+              {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
             </InputWrapper>
-          </MultiInputWrapper>
-        </ContainerFields>
 
-        <SubmitContainer>
-          <Button type="submit" disabled={dynamicInputIsLoading}>
+            <MultiInputWrapper>
+              <InputWrapper>
+                <Input
+                  label="Valid Thru"
+                  name="expiry"
+                  type="text"
+                  style = {{ width: "100%" }}
+                  mask="19/99"
+                  formatChars= {{
+                    "1": "[0-1]",
+                    "9": "[0-9]",
+                  }}
+                  value={data.expiry || ""}
+                  onChange={handleChange("expiry")}
+                  onSelect={handleChangeSelection("expiry")}
+                />
+                {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
+              </InputWrapper>
+
+              <InputWrapper
+                width="50%"
+              >
+                <Input
+                  label="CVC"
+                  mask="999"
+                  name="cvc"
+                  type="text"
+                  style = {{ width: "90%", marginLeft: "10%" }}
+                  value={data.cvc || ""}
+                  onChange={handleChange("cvc")}
+                  onSelect={handleChangeSelection("cvc")}
+                />
+                {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
+              </InputWrapper>
+            </MultiInputWrapper>
+          </ContainerFields>
+
+          <SubmitContainer>
+            <Button type="submit" disabled={dynamicInputIsLoading}>
             Finalizar Pagamento
-          </Button>
-        </SubmitContainer>
-      </FormWrapper>
+            </Button>
+          </SubmitContainer>
+        </FormWrapper>
+      ) : (
+        <Confirmation />
+      )}
+
     </PaymentContainer>
 
   );

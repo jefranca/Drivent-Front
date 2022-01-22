@@ -8,11 +8,7 @@ import PaymentForm from "../../../components/PaymentForm";
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
-  /*
-    Card name
-    Name
-    valid thru - cvc
-  */
+
   return (
     <>
       <StyledTypography variant="h4"> Ingresso e pagamento </StyledTypography>
