@@ -16,11 +16,39 @@ const validations = {
   expiry: {
     custom: {
       isValid: (value) => {
-        console.log(value);
+        if (!value) {
+          return false;
+        }
 
-        return  !value || !isNaN(new Date(value?.split("-").reverse().join("-")));
+        if (value.length < 5) {
+          return false;
+        }
+        
+        const currentTime = new Date();
+        const cardMonth = parseInt(value.split("/")[0]);
+        const cardYear = parseInt(value.split("/")[1]);
+        const currentYear = parseInt(currentTime.getFullYear().toString().substring(2));
+        const currentMonth = parseInt(currentTime.getMonth() + 1);
+
+        if (cardMonth > 12) {
+          return false;
+        }
+
+        if (cardMonth <= 0) {
+          return false;
+        }
+
+        if (cardYear < currentYear) {
+          return false;
+        }
+
+        if (cardYear === currentYear && cardMonth <= currentMonth) {
+          return false;
+        }
+
+        return true;
       },
-      message: "Selecione uma data de validade",
+      message: "Data inválida",
     },
   },
 
