@@ -7,7 +7,7 @@ export default function RoomOptions({ rooms }) {
       <h2>Ótima pedida! Agora escolha seu quarto:</h2>
       <BoxRooms>
         {rooms.map((room) => (
-          <RoomCard room={room} />
+          <RoomCard key={room.id} room={room} />
         ))}
       </BoxRooms>
     </>
