@@ -1,16 +1,19 @@
-import PaymentInfo from "../../../components/PaymentsInfo/index.js";
-
+import { useContext } from "react";
+import TicketForm from "../../../components/TicketForm/index.js";
 import PaymentForm from "../../../components/PaymentForm";
+import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
+import Title from "../../../components/Dashboard/shared/Title";
+import UserContext from "../../../contexts/UserContext";
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
 
   return (
     <>
-      <StyledTypography variant="h4"> Ingresso e pagamento </StyledTypography>
+      <Title> Ingresso e pagamento </Title>
       {userData.fullRegistration ? (
         <>
-          <PaymentForm />
+          <TicketForm />
         </>
       ) : (
         <UnauthorizedMessage>
@@ -19,4 +22,4 @@ export default function Payment() {
       )}
     </>
   );
-
+}

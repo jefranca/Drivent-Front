@@ -6,7 +6,7 @@ import UnauthorizedMessage from "../Dashboard/shared/UnauthorizedMessage";
 import TicketSelection from "./TicketSelection.js";
 
 export default function PaymentInfo() {
-  const { ticketPrice, enrollment, reservation } = useApi();
+  const { ticket, enrollment, reservation } = useApi();
   const [enrollmentData, setEnrollmentData] = useState();
   const [hasHotel, setHasHotel] = useState();
   const [isOnline, setIsOnline] = useState();
@@ -15,7 +15,10 @@ export default function PaymentInfo() {
   const [value, setValue] = useState(0);
 
   useEffect(() => {
-    reservation.getReservationInfo().then((res) => {
+    ticket.getTickets().then((res) => {
+      console.log(res.data);
+    });
+    /* reservation.getReservationInfo().then((res) => {
       setReservationData(res.data);
       if (res.data) {
         setIsOnline(!res.data.ticket.isInPerson);
@@ -36,7 +39,7 @@ export default function PaymentInfo() {
         return;
       }
       setEnrollmentData(res.data);
-    });
+    });*/
   }, []);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ export default function PaymentInfo() {
       }
     }
   }, [isOnline, hasHotel, prices]);
-
+  /*
   if (!enrollmentData) return "Carregando . . .";
   if (!enrollmentData.address)
     return (
@@ -57,7 +60,7 @@ export default function PaymentInfo() {
         Você precisa completar sua inscrição antes de prosseguir pra escolha de
         ingresso
       </UnauthorizedMessage>
-    );
+    );*/
 
   function reserveTicket() {
     const body = {
