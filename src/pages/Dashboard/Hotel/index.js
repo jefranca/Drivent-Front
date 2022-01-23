@@ -7,12 +7,24 @@ import { useState } from "react";
 import { useEffect } from "react";
 import useApi from "../../../hooks/useApi";
 import HotelOptions from "../../../components/Hotel/HotelOptions";
+import HotelContext from "../../../contexts/HotelContext";
+import RoomOptions from "../../../components/Hotel/Room/RoomOptions";
 
 export default function Hotel() {
   const { userData } = useContext(UserContext);
-
+  const { hotelData, setHotelData } = useContext(HotelContext);
   const [hotels, setHotels] = useState(null);
+  const [hotelSelected, setHotelSelected] = useState(null);
   const api = useApi();
+
+  useEffect(() => {
+    if (hotelData) {
+      setHotelSelected(true);
+      return;
+    }
+    setHotelSelected(false);
+  }, [hotelData]);
+
   useEffect(() => {
     api.hotel
       .getAllHotels()
@@ -40,6 +52,7 @@ export default function Hotel() {
 
       <h2>Primeiro, escolha seu hotel</h2>
       {hotels ? <HotelOptions hotels={hotels} /> : ""}
+      {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
     </Container>
   );
 }

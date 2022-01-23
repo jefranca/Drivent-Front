@@ -1,6 +1,4 @@
-import { useContext } from "react";
-import { useEffect } from "react";
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import HotelContext from "../../contexts/HotelContext";
 
