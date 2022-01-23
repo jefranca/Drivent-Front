@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
+import UnauthorizedMessage from "../Dashboard/shared/UnauthorizedMessage";
 
 import TicketSelection from "./TicketSelection.js";
 
@@ -17,7 +18,6 @@ export default function PaymentInfo() {
     reservation.getReservationInfo().then((res) => {
       setReservationData(res.data);
       if (res.data) {
-        console.log(res.data);
         setIsOnline(!res.data.ticket.isInPerson);
         setHasHotel(res.data.ticket.hasHotel);
       }
@@ -51,7 +51,13 @@ export default function PaymentInfo() {
   }, [isOnline, hasHotel, prices]);
 
   if (!enrollmentData) return "Carregando . . .";
-  if (!enrollmentData.address) return "Preencha suas informações";
+  if (!enrollmentData.address)
+    return (
+      <UnauthorizedMessage>
+        Você precisa completar sua inscrição antes de prosseguir pra escolha de
+        ingresso
+      </UnauthorizedMessage>
+    );
 
   function reserveTicket() {
     const body = {
