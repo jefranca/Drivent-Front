@@ -1,8 +1,32 @@
+import { useContext } from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import styled from "styled-components";
+import HotelContext from "../../contexts/HotelContext";
 
 export default function HotelCard({ hotel }) {
+  const { hotelData, setHotelData } = useContext(HotelContext);
+  const [selected, setSelected] = useState(false);
+
+  useEffect(() => {
+    if (hotelData?.id === hotel.id) {
+      setSelected(true);
+      return;
+    }
+    setSelected(false);
+  }, [hotelData]);
+
+  function toggleHotel() {
+    if (hotelData?.id === hotel.id) {
+      setHotelData(null);
+      return;
+    }
+
+    setHotelData({ ...hotel, roomSelected: null });
+  }
+
   return (
-    <Card>
+    <Card onClick={toggleHotel} selected={selected}>
       <img src={hotel.image} alt="hotel" />
       <h3>{hotel.name}</h3>
       <Description>
@@ -18,7 +42,7 @@ export default function HotelCard({ hotel }) {
 }
 
 const Card = styled.div`
-  background: #f1f1f1;
+  background: ${({ selected }) => (selected ? "#FFEED2" : "#f1f1f1")};
   height: 265px;
   width: 196px;
   border-radius: 10px;
