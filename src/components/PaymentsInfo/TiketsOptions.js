@@ -1,13 +1,20 @@
 import styled from "styled-components";
 
-export default function TicketsOptions({ ticketOption, select }) {
+export default function TicketsOptions({ ticketOption, type, setType, setTypeTo, price }) {
+  let border;
+  if(type === undefined || !type) {
+    border = "1px solid #cecece";
+  } else {
+    border = "#FFEED2";
+  }
   return (
     <Option
-      border = {select? "#FFEED2" :  "1px solid #cecece" }
-      selected = {select}
+      onClick={() => setType(setTypeTo)}
+      border={border}
+      type={type}
     >
       {ticketOption}
-      <span>R$ 250</span>
+      <span>R$ {price}</span>
     </Option>
   );
 }
@@ -20,10 +27,10 @@ const Option = styled.div`
   width: 140px;
   height: 140px;
   border-radius: 20px;
-  border: ${p => p.border};
+  border: ${(p) => p.border};
   color: #454545;
   font-family: "Roboto", Sans-serif;
-  background-color: ${p => p.selected ? "#FFEED2" : ""};
+  background-color: ${(p) => p.type === undefined ? "": p.type ? "#FFEED2" : ""};
   cursor: pointer;
   span {
     margin-top: 10px;

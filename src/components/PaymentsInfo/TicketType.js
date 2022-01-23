@@ -2,12 +2,10 @@ import Grid from "@material-ui/core/Grid";
 import TicketsOptions from "./TiketsOptions";
 import SubTitle from "./SubTitle";
 
-export default function TicketType() {
-  const names = ["Presencial", "Online"];
-
+export default function TicketType({ type, setType, subTitle, names, prices }) {
   return (
     <>
-      <SubTitle text={"Primeiro, escolha a modalidade do ingresso"} />
+      <SubTitle text={subTitle} />
       <Grid
         container
         direction="row"
@@ -18,17 +16,19 @@ export default function TicketType() {
         <Grid item>
           <TicketsOptions
             ticketOption={names[0]}
-            select={false}
-            //setSelection={setSelection}
-            setSelectedTo={false}
+            type={type === undefined ? null : !type}
+            setType={setType}
+            setTypeTo={false}
+            price={prices[0]}
           />
         </Grid>
         <Grid item>
           <TicketsOptions
             ticketOption={names[1]}
-            select={false}
-            //setSelection={setSelection}
-            setSelectedTo={false}
+            type={type === undefined ? null : type}
+            setType={setType}
+            setTypeTo={true}
+            price={prices[1]}
           />
         </Grid>
       </Grid>
