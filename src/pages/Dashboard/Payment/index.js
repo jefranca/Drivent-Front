@@ -1,8 +1,4 @@
-import { useContext } from "react";
-import UserContext from "../../../contexts/UserContext";
-import Typography from "@material-ui/core/Typography";
-import styled from "styled-components";
-import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
+import PaymentInfo from "../../../components/PaymentsInfo/index.js";
 
 import PaymentForm from "../../../components/PaymentForm";
 
@@ -23,9 +19,4 @@ export default function Payment() {
       )}
     </>
   );
-}
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px !important;
-`;
 
