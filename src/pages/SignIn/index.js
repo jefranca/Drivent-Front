@@ -31,7 +31,7 @@ export default function SignIn() {
       setUserData(response.data);
     }).catch(error => {
       /* eslint-disable-next-line no-console */
-      console.error(error);
+      .error(error);
       
       if (error.response) {
         for (const detail of error.response.data.details) {

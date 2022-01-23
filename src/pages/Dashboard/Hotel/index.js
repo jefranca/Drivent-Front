@@ -3,9 +3,26 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
+import { useState } from "react";
+import { useEffect } from "react";
+import useApi from "../../../hooks/useApi";
+import HotelOptions from "../../../components/Hotel/HotelOptions";
 
 export default function Hotel() {
   const { userData } = useContext(UserContext);
+
+  const [hotels, setHotels] = useState(null);
+  const api = useApi();
+  useEffect(() => {
+    api.hotel
+      .getAllHotels()
+      .then((response) => {
+        setHotels(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
 
   return (
     <Container>
@@ -22,83 +39,7 @@ export default function Hotel() {
       )*/}
 
       <h2>Primeiro, escolha seu hotel</h2>
-      <BoxHotels>
-        <HotelCard>
-          <img
-            src="https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1300,q_auto,w_2000/itemimages/38/86/38862_v9.jpeg"
-            alt="hotel"
-          />
-          <h3>Driven Resort</h3>
-          <Description>
-            <Title>Tipos de acomodação:</Title>
-            <span>Single e Double</span>
-          </Description>
-          <Description>
-            <Title>Vagas disponíveis:</Title>
-            <span>103</span>
-          </Description>
-        </HotelCard>
-        <HotelCard>
-          <img
-            src="https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1300,q_auto,w_2000/itemimages/38/86/38862_v9.jpeg"
-            alt="hotel"
-          />
-          <h3>Driven Resort</h3>
-          <Description>
-            <Title>Tipos de acomodação:</Title>
-            <span>Single e Double</span>
-          </Description>
-          <Description>
-            <Title>Vagas disponíveis:</Title>
-            <span>103</span>
-          </Description>
-        </HotelCard>
-        <HotelCard>
-          <img
-            src="https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1300,q_auto,w_2000/itemimages/38/86/38862_v9.jpeg"
-            alt="hotel"
-          />
-          <h3>Driven Resort</h3>
-          <Description>
-            <Title>Tipos de acomodação:</Title>
-            <span>Single e Double</span>
-          </Description>
-          <Description>
-            <Title>Vagas disponíveis:</Title>
-            <span>103</span>
-          </Description>
-        </HotelCard>
-        <HotelCard>
-          <img
-            src="https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1300,q_auto,w_2000/itemimages/38/86/38862_v9.jpeg"
-            alt="hotel"
-          />
-          <h3>Driven Resort</h3>
-          <Description>
-            <Title>Tipos de acomodação:</Title>
-            <span>Single e Double</span>
-          </Description>
-          <Description>
-            <Title>Vagas disponíveis:</Title>
-            <span>103</span>
-          </Description>
-        </HotelCard>
-        <HotelCard>
-          <img
-            src="https://imgcy.trivago.com/c_limit,d_dummy.jpeg,f_auto,h_1300,q_auto,w_2000/itemimages/38/86/38862_v9.jpeg"
-            alt="hotel"
-          />
-          <h3>Driven Resort</h3>
-          <Description>
-            <Title>Tipos de acomodação:</Title>
-            <span>Single e Double</span>
-          </Description>
-          <Description>
-            <Title>Vagas disponíveis:</Title>
-            <span>103</span>
-          </Description>
-        </HotelCard>
-      </BoxHotels>
+      {hotels ? <HotelOptions hotels={hotels} /> : ""}
     </Container>
   );
 }
