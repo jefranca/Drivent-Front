@@ -8,18 +8,8 @@ import ResumeOrder from "./ResumeOrder";
 import Grid from "@material-ui/core/Grid";
 import Ticket from "./Ticket";
 
-import { useContext } from "react";
-import UserContext from "../../contexts/UserContext";
-
 export default function PaymentInfo() {
-  const { userData, setUserData } = useContext(UserContext);
-  const { ticket, enrollment, reservation } = useApi();
-  const [enrollmentData, setEnrollmentData] = useState();
-  const [hasHotel, setHasHotel] = useState();
-  const [isOnline, setIsOnline] = useState();
-  const [prices, setPrices] = useState();
-  const [reservationData, setReservationData] = useState();
-  const [value, setValue] = useState(0);
+  const { ticket, reservation } = useApi();
 
   const [tickets, setTickets] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(0);
@@ -39,45 +29,12 @@ export default function PaymentInfo() {
         // eslint-disable-next-line no-console
         console.error(error.response);
       });
-    /* reservation.getReservationInfo().then((res) => {
-      setReservationData(res.data);
-      if (res.data) {
-        setIsOnline(!res.data.ticket.isInPerson);
-        setHasHotel(res.data.ticket.hasHotel);
-      }
-    });
-    ticketPrice
-      .getTicketPrice()
-      .then((res) => {
-        setPrices(res.data);
-      })
-      .catch(() => {
-        toast("Algo está errado");
-      });
-    enrollment.getPersonalInformations().then((res) => {
-      if (res.status !== 200) {
-        setEnrollmentData({});
-        return;
-      }
-      setEnrollmentData(res.data);
-    });*/
   }, []);
-
-  useEffect(() => {
-    if (isOnline) {
-      setValue(prices?.Online);
-    } else {
-      setValue(prices?.Presencial);
-      if (hasHotel) {
-        setValue(prices?.Presencial + prices?.Hotel);
-      }
-    }
-  }, [isOnline, hasHotel, prices]);
   
   if (!tickets.presencial) {
     return "Carregando . . .";
   }
-
+  /*
   function reserveTicket() {
     const body = {
       isInPerson: !isOnline,
@@ -93,17 +50,7 @@ export default function PaymentInfo() {
         toast("Algo deu errado!");
       });
   }
-
-  const ticketSelectionObj = {
-    reservationData,
-    isOnline,
-    setIsOnline,
-    prices,
-    value,
-    reserveTicket,
-    hasHotel,
-    setHasHotel,
-  };
+*/
 
   return (
     <>
@@ -174,6 +121,7 @@ export default function PaymentInfo() {
           </TicketList>
         </>
       )}
+      
       {userOrder.total > 0 && (
         <ResumeOrder total={userOrder.total} />
       )}
