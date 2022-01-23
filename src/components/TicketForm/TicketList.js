@@ -1,8 +1,8 @@
 import Grid from "@material-ui/core/Grid";
-import TicketsOptions from "./TiketsOptions";
+import TicketsOptions from "./Ticket";
 import SubTitle from "./SubTitle";
 
-export default function TicketType({ type, setType, subTitle, names, prices }) {
+export default function TicketList({ type, setType, subTitle, names, prices }) {
   return (
     <>
       <SubTitle text={subTitle} />

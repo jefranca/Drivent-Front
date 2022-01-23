@@ -1,20 +1,28 @@
 import styled from "styled-components";
+import React, { useState } from "react";
 
-export default function TicketsOptions({ ticketOption, type, setType, setTypeTo, price }) {
+export default function Ticket({ price, name, onSelect, isSelected }) {
   let border;
-  if(type === undefined || !type) {
+
+  const handleClick = () => {
+    onSelect();
+  };
+
+  if(!isSelected) {
     border = "1px solid #cecece";
   } else {
     border = "#FFEED2";
   }
   return (
     <Option
-      onClick={() => setType(setTypeTo)}
+
+      isSelected={isSelected}
+      onClick={() => handleClick()}
       border={border}
-      type={type}
+      //   type={type}
     >
-      {ticketOption}
-      <span>R$ {price}</span>
+      { name }
+      <span>{ price }</span>
     </Option>
   );
 }
@@ -27,10 +35,11 @@ const Option = styled.div`
   width: 140px;
   height: 140px;
   border-radius: 20px;
-  border: ${(p) => p.border};
   color: #454545;
   font-family: "Roboto", Sans-serif;
-  background-color: ${(p) => p.type === undefined ? "": p.type ? "#FFEED2" : ""};
+  background-color: ${({ isSelected }) => isSelected ? "#FFEED2": "#fff" };
+  border: ${({ isSelected }) => isSelected ? "none": "1px solid #cecece" };
+
   cursor: pointer;
   span {
     margin-top: 10px;

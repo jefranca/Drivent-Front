@@ -1,5 +1,5 @@
 import Title from "./Title";
-import TicketType from "./TicketType";
+import TicketType from "./TicketList";
 import ResumeOrder from "./ResumeOrder";
 
 export default function TicketSelection({
@@ -11,6 +11,7 @@ export default function TicketSelection({
   reserveTicket,
   hasHotel,
   setHasHotel,
+  tickets
 }) {
   return (
     <>
@@ -19,13 +20,6 @@ export default function TicketSelection({
         "Pagamento em desenvolvimento"
       ) : (
         <>
-          <TicketType
-            type={isOnline}
-            setType={setIsOnline}
-            subTitle={"Primeiro, escolha a modalidade do ingresso"}
-            names={["Presencial", "Online"]}
-            prices={[prices?.Presencial, prices?.Online]}
-          />
           {isOnline !== undefined ? (
             isOnline ? (
               <ResumeOrder value={value} reserveTicket={reserveTicket} />

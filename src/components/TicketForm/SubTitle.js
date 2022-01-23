@@ -2,7 +2,7 @@ import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 
 export default function SubTitle({ text }) {
-  return <StyledTitle variant="h5"> {text}</StyledTitle>;
+  return <StyledTitle variant="h6"> {text}</StyledTitle>;
 }
 
 const StyledTitle = styled(Typography)`
