@@ -36,6 +36,20 @@ export default function Hotel() {
       });
   }, []);
 
+  //console.log(hotelData);
+
+  function makeReservation() {
+    console.log("apertou");
+    api.hotel
+      .makeReservation(hotelData.id, hotelData.roomSelected.id)
+      .then(() => {
+        console.log("salvooo");
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }
+
   return (
     <Container>
       <StyledTypography variant="h4">
@@ -53,6 +67,11 @@ export default function Hotel() {
       <h2>Primeiro, escolha seu hotel</h2>
       {hotels ? <HotelOptions hotels={hotels} /> : ""}
       {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
+      {hotelData?.roomSelected ? (
+        <Button onClick={makeReservation}>RESERVAR QUARTO</Button>
+      ) : (
+        ""
+      )}
     </Container>
   );
 }
@@ -70,46 +89,16 @@ const Container = styled.div`
   }
 `;
 
-const BoxHotels = styled.div`
-  height: 300px;
-  width: 100%;
+const Button = styled.div`
   display: flex;
-  overflow-x: auto;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 185px;
+  border-radius: 4px;
+  box-shadow: 0px 2px 10px 0px #00000040;
+  background: #e0e0e0;
+  font-family: Roboto;
+  font-weight: 400;
+  color: #000;
 `;
-
-const HotelCard = styled.div`
-  background: #f1f1f1;
-  height: 265px;
-  width: 196px;
-  border-radius: 10px;
-  font-family: "Roboto";
-  display: flex;
-  justify-content: space-around;
-  flex-direction: column;
-  margin-right: 20px;
-  padding: 18px 14px;
-  img {
-    height: 110px;
-    width: 170px;
-    border-radius: 5px;
-  }
-  & > h3 {
-    font-size: 20px;
-    font-weight: 400;
-    color: #343434;
-  }
-`;
-
-const Description = styled.div`
-  font-size: 12px;
-  display: flex;
-  flex-direction: column;
-  margin-top: 12px;
-  color: #3c3c3c;
-`;
-
-const Title = styled.span`
-  font-weight: 700;
-  margin-bottom: 2px;
-`;
-const RoomCard = styled.div``;
