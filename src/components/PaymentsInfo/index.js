@@ -95,6 +95,4 @@ export default function PaymentInfo() {
       )}
     </>
   );
-
-  // return <TicketSelection />;
 }
