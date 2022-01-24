@@ -17,7 +17,7 @@ import Button from "../../../components/Form/Button";
 import Title from "../../../components/Dashboard/shared/Title";
 
 export default function Hotel() {
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
   const { hotelData, setHotelData } = useContext(HotelContext);
   const { hotelReservationData, setHotelReservationData } = useContext(
     HotelReservationContext
@@ -40,6 +40,10 @@ export default function Hotel() {
   }, [hotels]);
 
   useEffect(() => {
+    getHotels();
+  }, []);
+
+  function getHotels() {
     api.hotel
       .getAllHotels()
       .then((response) => {
@@ -49,12 +53,18 @@ export default function Hotel() {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }
 
-  //localStorage.clear();
   function getReservation() {
     api.hotel.getHotelReservation(userData.user.id).then((response) => {
       setHotelReservationData(response.data);
+      if (hotelReservationData) {
+        setUserData({
+          ...userData,
+          hotelId: hotelReservationData.hotel.id,
+          roomId: hotelReservationData.room.id,
+        });
+      }
     });
   }
 

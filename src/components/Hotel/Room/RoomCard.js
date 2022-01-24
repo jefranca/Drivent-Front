@@ -6,8 +6,8 @@ import HotelContext from "../../../contexts/HotelContext";
 export default function RoomCard({ room }) {
   const [selected, setSelected] = useState(false);
   const { hotelData, setHotelData } = useContext(HotelContext);
-
   let noVacancies = room.roomVacancies === room.occupiedVacancies;
+
   useEffect(() => {
     if (hotelData.roomSelected?.id === room.id) {
       setSelected(true);
@@ -30,13 +30,13 @@ export default function RoomCard({ room }) {
     >
       <span>{room.number}</span>
       <div>
-        {roomPeople.map((person) =>
+        {roomPeople.map((person, index) =>
           person === "IoSelected" ? (
-            <IoSelected />
+            <IoSelected key={index} />
           ) : person === "IoPerson" ? (
-            <IoPerson />
+            <IoPerson key={index} />
           ) : (
-            <IoPersonOutline />
+            <IoPersonOutline key={index} />
           )
         )}
       </div>
