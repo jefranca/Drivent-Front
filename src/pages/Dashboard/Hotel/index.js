@@ -50,6 +50,7 @@ export default function Hotel() {
       });
   }, []);
 
+  console.log(hotelData);
   function getReservation() {
     api.hotel.getHotelReservation(userData.user.id).then((response) => {
       setHotelReservationData(response.data);
