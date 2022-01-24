@@ -1,15 +1,13 @@
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
-import Typography from "@material-ui/core/Typography";
-import styled from "styled-components";
+import Title from "../../../components/Dashboard/shared/Title";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
 
 export default function Hotel() {
   const { userData } = useContext(UserContext);
-
   return (
     <>
-      <StyledTypography variant="h4"> Escolha de hotel e quarto </StyledTypography>
+      <Title> Escolha de hotel e quarto </Title>
       {userData.ticket ? (
         <>Em breve!</>
       ) : (
@@ -21,7 +19,3 @@ export default function Hotel() {
     </>
   );
 }
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px !important;
-`;
