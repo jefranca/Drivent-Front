@@ -10,7 +10,7 @@ export default function Hotel() {
   return (
     <>
       <StyledTypography variant="h4"> Ingresso e pagamento </StyledTypography>
-      {userData.subscription.isPaid ? (
+      {userData.ticket ? (
         <>Em breve!</>
       ) : (
         <UnauthorizedMessage>
