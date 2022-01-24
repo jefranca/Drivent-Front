@@ -1,11 +1,15 @@
 import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import HotelContext from "../../contexts/HotelContext";
+import HotelReservationContext from "../../contexts/HotelReservationContext";
 
 export default function HotelCard({ hotel }) {
   const { hotelData, setHotelData } = useContext(HotelContext);
+  const { hotelReservationData, setHotelReservationData } = useContext(
+    HotelReservationContext
+  );
   const [selected, setSelected] = useState(false);
-
+  hotelReservationData, hotelData;
   useEffect(() => {
     if (hotelData?.id === hotel.id) {
       setSelected(true);
@@ -21,6 +25,26 @@ export default function HotelCard({ hotel }) {
     }
 
     setHotelData({ ...hotel, roomSelected: null });
+  }
+
+  if (hotelReservationData) {
+    if (hotelReservationData.hotel.id === hotel.id) {
+      return (
+        <Card onClick={toggleHotel} selected={selected}>
+          <img src={hotel.image} alt="hotel" />
+          <h3>{hotel.name}</h3>
+          <Description>
+            <Title>Tipos de acomodação:</Title>
+            <span>{typesOfRooms(hotel)}</span>
+          </Description>
+          <Description>
+            <Title>Vagas disponíveis: </Title>
+            <span>{hotel.totalVacancies}</span>
+          </Description>
+        </Card>
+      );
+    }
+    return;
   }
 
   return (

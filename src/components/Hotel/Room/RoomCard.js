@@ -9,8 +9,9 @@ export default function RoomCard({ room }) {
 
   let noVacancies = room.roomVacancies === room.occupiedVacancies;
   useEffect(() => {
-    if (hotelData.roomSelected?.id === room.id) setSelected(true);
-    else setSelected(false);
+    if (hotelData.roomSelected?.id === room.id) {
+      setSelected(true);
+    } else setSelected(false);
   }, [hotelData]);
 
   function toggleRoom() {
@@ -18,15 +19,14 @@ export default function RoomCard({ room }) {
     setSelected(!isSelect);
     setHotelData({ ...hotelData, roomSelected: isSelect ? null : room });
   }
-
   const roomPeople = roomPopulate(selected, room);
 
   return (
     <Card
-      onClick={toggleRoom}
       selected={selected}
       noVacancies={noVacancies}
       disabled={noVacancies}
+      onClick={noVacancies ? null : toggleRoom}
     >
       <span>{room.number}</span>
       <div>
@@ -45,7 +45,8 @@ export default function RoomCard({ room }) {
 }
 
 const Card = styled.div`
-  background: ${({ selected }) => (selected ? "#FFEED2" : "#fff")};
+  background: ${({ selected, noVacancies }) =>
+    noVacancies ? "#E9E9E9" : selected ? "#FFEED2" : "#fff"};
   height: 45px;
   width: 190px;
   font-family: "Roboto";
@@ -59,7 +60,7 @@ const Card = styled.div`
   border: 1px solid #cecece;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   span {
-    color: ${(noVacancies) => !noVacancies && "#454545"};
+    color: ${(noVacancies) => (noVacancies ? "#454545" : "#000")};
     font-size: 20px;
     font-weight: 700;
   }
