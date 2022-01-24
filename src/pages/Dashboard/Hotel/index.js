@@ -9,7 +9,7 @@ export default function Hotel() {
 
   return (
     <>
-      <StyledTypography variant="h4"> Ingresso e pagamento </StyledTypography>
+      <StyledTypography variant="h4"> Escolha de hotel e quarto </StyledTypography>
       {userData.ticket ? (
         <>Em breve!</>
       ) : (
