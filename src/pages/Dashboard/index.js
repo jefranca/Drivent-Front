@@ -25,14 +25,32 @@ export default function Dashboard() {
   const { eventInfo } = useContext(EventInfoContext);
   const { setUserData } = useContext(UserContext);
   const match = useRouteMatch();
-  const { enrollment } = useApi();
+  const { enrollment, reservation } = useApi();
 
   useEffect(() => {
     enrollment.getPersonalInformations().then(response => {
       if (response.data) {
-        setUserData((userData) => ({ ...userData, fullRegistration: true }));
+        reservation.getReservationInfo()
+          .then((res) => {
+            setUserData((userData) => ({
+              ...userData,
+              fullRegistration: true,
+              ticket: {
+                ...res.data
+              }
+            }));
+          });
       } else {
-        setUserData((userData) => ({ ...userData, fullRegistration: false }));
+        reservation.getReservationInfo()
+          .then((res) => {
+            setUserData((userData) => ({
+              ...userData,
+              fullRegistration: false,
+              ticket: {
+                ...res.data
+              }
+            }));
+          });
       }
     });
   }, []);
