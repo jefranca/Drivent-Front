@@ -1,25 +1,15 @@
 import styled from "styled-components";
-import React, { useState } from "react";
 
 export default function Ticket({ price, name, onSelect, isSelected }) {
-  let border;
-
   const handleClick = () => {
     onSelect();
   };
 
-  if(!isSelected) {
-    border = "1px solid #cecece";
-  } else {
-    border = "#FFEED2";
-  }
   return (
     <Option
 
       isSelected={isSelected}
       onClick={() => handleClick()}
-      border={border}
-      //   type={type}
     >
       { name }
       <span>{ price }</span>
