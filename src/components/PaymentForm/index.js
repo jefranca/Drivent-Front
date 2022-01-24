@@ -21,14 +21,17 @@ import "react-credit-cards/es/styles-compiled.css";
 import { Ticket } from "./Ticket";
 import { Confirmation } from "./Confirmation";
 
-export default function PaymentForm() {
+import useApi from "../../hooks/useApi";
+
+export default function PaymentForm({ userOrder }) {
   const { userData, setUserData } = useContext(UserContext);
+  const { reservation } = useApi();
   const ticketTypes = {
-    0: "Presencial",
-    1: "Presencial + Com Hotel",
-    2: "Online"
+    1: "Presencial",
+    2: "Online",
+    3: "Presencial + Com Hotel",
   };
-  const ticketType = ticketTypes[userData.subscription.type];
+  const ticketType = ticketTypes[userOrder.ticketId];
 
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
   
@@ -41,14 +44,24 @@ export default function PaymentForm() {
     validations: FormValidations,
 
     onSubmit: () => {
-      toast("Pago com sucesso!");
-      setUserData((userData) => ({
-        ...userData,
-        subscription: {
-          ...userData.subscription,
-          isPaid: true,
-        }
-      }));
+      setDynamicInputIsLoading(true);
+      reservation.postNewReservation({ ticketId: userOrder.ticketId })
+        .then((res) => {
+          setDynamicInputIsLoading(false);
+          toast("Pago com sucesso!");
+          setUserData((userData) => ({
+            ...userData,
+            ticket: {
+              ...res.data
+            }
+          }));
+        })
+        .catch((error) => {
+          setDynamicInputIsLoading(false);
+          toast("Erro ao realizar o pagamento.");
+          // eslint-disable-next-line no-console
+          console.error(error.response);
+        });
     },
 
     initialValues: {
@@ -75,7 +88,7 @@ export default function PaymentForm() {
       <SubTitle variant="h6"> Ingresso </SubTitle>
       <Ticket 
         type={ticketType}
-        value={userData.subscription.price}
+        value={userOrder.total}
       />
       <SubTitle variant="h6"> Pagamento </SubTitle>
       {!userData.subscription.isPaid ? (

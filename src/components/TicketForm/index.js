@@ -2,22 +2,17 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
-import SubTitle from "./SubTitle";
+import SubTitle from "../Dashboard/shared/SubTitle";
 
 import ResumeOrder from "./ResumeOrder";
 import Grid from "@material-ui/core/Grid";
 import Ticket from "./Ticket";
 
-export default function PaymentInfo() {
-  const { ticket, reservation } = useApi();
-
+export default function PaymentInfo({ setIsTicketChosen, userOrder, setUserOrder }) {
+  const { ticket } = useApi();
   const [tickets, setTickets] = useState([]);
   const [selectedTicket, setSelectedTicket] = useState(0);
-
-  const [userOrder, setUserOrder] = useState({
-    isOnline: true,
-    total: 0,
-  });
+  const [isOnline, setIsOnline] = useState(true);
 
   useEffect(() => {
     ticket.getTickets()
@@ -54,7 +49,10 @@ export default function PaymentInfo() {
 
   return (
     <>
-      <SubTitle text={"Primeiro, escolha sua modalidade de ingresso"} />
+      <SubTitle>
+        Primeiro, escolha sua modalidade de ingresso
+      </SubTitle>
+      
       <TicketList
         container
         direction="row"
@@ -68,7 +66,8 @@ export default function PaymentInfo() {
             price={`R$ ${tickets.presencial.price}`}
             onSelect = {() => {
               setSelectedTicket(2);
-              setUserOrder({ ...userOrder, isOnline: false, total: 0 });
+              setUserOrder({ ...userOrder, total: 0, ticketId: undefined });
+              setIsOnline(false);
             }}
             isSelected = {selectedTicket >= 2}
           />
@@ -79,16 +78,19 @@ export default function PaymentInfo() {
             price={`R$ ${tickets.online.price}`}
             onSelect = {() => {
               setSelectedTicket(1);
-              setUserOrder({ ...userOrder, isOnline: true, total: 100 });
+              setUserOrder({ ...userOrder, total: 100, ticketId: tickets.online.id });
+              setIsOnline(true);
             }}
             isSelected = {selectedTicket === 1}
           />
         </Grid>
       </TicketList>
 
-      {!userOrder.isOnline && (
+      {!isOnline && (
         <>
-          <SubTitle text={"Ótimo! Agora escolha sua modalidade de hospedagem"} />
+          <SubTitle>
+            Ótimo! Agora escolha sua modalidade de hospedagem
+          </SubTitle>
           <TicketList
             container
             direction="row"
@@ -102,7 +104,7 @@ export default function PaymentInfo() {
                 price={"+ R$ 0"}
                 onSelect = {() => {
                   setSelectedTicket(3);
-                  setUserOrder({ ...userOrder, total: 250 });
+                  setUserOrder({ ...userOrder, total: 250, ticketId: tickets.presencial.id });
                 }}
                 isSelected = {selectedTicket === 3}
               />
@@ -113,7 +115,7 @@ export default function PaymentInfo() {
                 price={`+ R$ ${tickets.hotel.price}`}
                 onSelect = {() => {
                   setSelectedTicket(4);
-                  setUserOrder({ ...userOrder, total: 600 });
+                  setUserOrder({ ...userOrder, total: 600, ticketId: tickets.hotel.id });
                 }}
                 isSelected = {selectedTicket === 4}
               />
@@ -121,9 +123,14 @@ export default function PaymentInfo() {
           </TicketList>
         </>
       )}
-      
+
       {userOrder.total > 0 && (
-        <ResumeOrder total={userOrder.total} />
+        <>
+          <ResumeOrder 
+            total={userOrder.total} 
+            onClick={() => setIsTicketChosen(true)}
+          />
+        </>
       )}
     </>
   );

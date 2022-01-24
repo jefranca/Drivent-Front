@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import React, { useContext, useState } from "react";
 import TicketForm from "../../../components/TicketForm/index.js";
 import PaymentForm from "../../../components/PaymentForm";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
@@ -7,13 +7,28 @@ import UserContext from "../../../contexts/UserContext";
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
-
+  const [isTicketChosen, setIsTicketChosen] = useState(false);
+  const [userOrder, setUserOrder] = useState({
+    total: 0,
+    ticketId: undefined
+  });
   return (
     <>
       <Title> Ingresso e pagamento </Title>
       {userData.fullRegistration ? (
         <>
-          <TicketForm />
+          {!isTicketChosen? (
+            <TicketForm 
+              setIsTicketChosen={setIsTicketChosen}
+              userOrder={userOrder}
+              setUserOrder={setUserOrder}
+            />
+          ) : (
+            <PaymentForm 
+              userOrder={userOrder}
+            />
+          )}
+
         </>
       ) : (
         <UnauthorizedMessage>

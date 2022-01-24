@@ -2,13 +2,13 @@ import styled from "styled-components";
 
 import CloseOrderButton from "./CloseOrderButton";
 
-export default function ResumeOrder({ total, reserveTicket }) {
+export default function ResumeOrder({ total, onClick }) {
   return (
     <>
       <Resume>
         Fechado! O total ficou em <span>R$ {total}.</span> Agora é só confirmar:
       </Resume>
-      <CloseOrderButton text={"RESERVAR INGRESSO"} onClick={reserveTicket} />
+      <CloseOrderButton text={"RESERVAR INGRESSO"} onClick={onClick} />
     </>
   );
 }
