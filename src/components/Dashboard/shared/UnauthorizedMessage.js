@@ -4,7 +4,7 @@ export default function UnauthorizedMessage({ children }) {
   return (
     <MessageContainer>
       <Message> {children} </Message>
-    </MessageContainer>  
+    </MessageContainer>
   );
 }
 
@@ -14,14 +14,14 @@ const Message = styled.span`
   font-size: 20px;
   line-height: 23px;
   text-align: center;
-  color: #8E8E8E;
+  color: #8e8e8e;
 `;
 
 const MessageContainer = styled.div`
   margin: auto;
-  max-width: 450px;
+  max-width: 500px;
   width: 90%;
-  height: calc(100% - 80px);
+  height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

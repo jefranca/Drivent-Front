@@ -8,10 +8,10 @@ export default class ReservationApi extends AuthenticatedApi {
     });
   }
 
-  postNewReservation({ isInPerson, hasHotel }) {
+  postNewReservation({ ticketId }) {
     return api.post(
       "/reservation/new",
-      { isInPerson, hasHotel },
+      { ticketId },
       { headers: { ...this.getAuthorizationHeader() } }
     );
   }

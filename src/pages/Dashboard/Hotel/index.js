@@ -1,6 +1,6 @@
+/* eslint-disable indent */
 /* eslint-disable no-console */
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
-import Typography from "@material-ui/core/Typography";
 import styled from "styled-components";
 import { useContext, useRef } from "react";
 import UserContext from "../../../contexts/UserContext";
@@ -14,6 +14,7 @@ import HotelReservationContext from "../../../contexts/HotelReservationContext";
 import ReservationReview from "./ReservationReview";
 import { toast } from "react-toastify";
 import Button from "../../../components/Form/Button";
+import Title from "../../../components/Dashboard/shared/Title";
 
 export default function Hotel() {
   const { userData } = useContext(UserContext);
@@ -50,7 +51,6 @@ export default function Hotel() {
       });
   }, []);
 
-  console.log(hotelData);
   function getReservation() {
     api.hotel.getHotelReservation(userData.user.id).then((response) => {
       setHotelReservationData(response.data);
@@ -62,7 +62,9 @@ export default function Hotel() {
       .makeReservation(hotelData.id, hotelData.roomSelected.id)
       .then(() => {
         toast("Hotel reserved");
-        window.location.reload();
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
       })
       .catch((error) => {
         console.error(error);
@@ -71,44 +73,49 @@ export default function Hotel() {
 
   return (
     <Container ref={hotelRef}>
-      <StyledTypography variant="h4">
-        Escolha de hotel e quarto
-      </StyledTypography>
-      {/*userData.isPaid ? (
-        <>Em breve!</>
+      <Title> Escolha de hotel e quarto </Title>
+      {userData.ticket ? (
+        userData.ticket.type === "hotel" ? (
+          <>
+            {hotelReservationData ? (
+              <ReservationReview
+                hotelReservationData={hotelReservationData}
+                setHotelReservationData={setHotelReservationData}
+              />
+            ) : (
+              <>
+                <h2>Primeiro, escolha seu hotel</h2>
+                {hotels ? <HotelOptions hotels={hotels} /> : ""}
+                {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
+                {hotelData?.roomSelected ? (
+                  <ChangeButton onClick={makeReservation}>
+                    RESERVAR QUARTO
+                  </ChangeButton>
+                ) : (
+                  ""
+                )}
+              </>
+            )}
+          </>
+        ) : (
+          <BoxMessage>
+            <UnauthorizedMessage>
+              Sua modalidade de ingresso não inclui hospedagem Prossiga para a
+              escolha de atividades
+            </UnauthorizedMessage>
+          </BoxMessage>
+        )
       ) : (
-        <UnauthorizedMessage>
-          Você precisa completar o pagamento antes de prosseguir pra escolha de
-          ingresso
-        </UnauthorizedMessage>
-      )*/}
-
-      {hotelReservationData ? (
-        <ReservationReview
-          hotelReservationData={hotelReservationData}
-          setHotelReservationData={setHotelReservationData}
-        />
-      ) : (
-        <>
-          <h2>Primeiro, escolha seu hotel</h2>
-          {hotels ? <HotelOptions hotels={hotels} /> : ""}
-          {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}{" "}
-          {hotelData?.roomSelected ? (
-            <ChangeButton onClick={makeReservation}>
-              RESERVAR QUARTO
-            </ChangeButton>
-          ) : (
-            ""
-          )}
-        </>
+        <BoxMessage>
+          <UnauthorizedMessage>
+            Você precisa ter confirmado pagamento antes de fazer a escolha de
+            hospedagem
+          </UnauthorizedMessage>
+        </BoxMessage>
       )}
     </Container>
   );
 }
-
-const StyledTypography = styled(Typography)`
-  margin-bottom: 20px !important;
-`;
 
 const Container = styled.div`
   font-family: "Roboto";
@@ -117,6 +124,13 @@ const Container = styled.div`
     font-size: 20px;
     margin-bottom: 18px;
   }
+`;
+
+const BoxMessage = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 500px;
 `;
 
 const ChangeButton = styled(Button)`
