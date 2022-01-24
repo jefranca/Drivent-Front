@@ -91,7 +91,7 @@ export default function PaymentForm({ userOrder }) {
         value={userOrder.total}
       />
       <SubTitle variant="h6"> Pagamento </SubTitle>
-      {!userData.subscription.isPaid ? (
+      {!userData.ticket ? (
         <FormWrapper onSubmit={handleSubmit}>
           <ContainerCard>
 

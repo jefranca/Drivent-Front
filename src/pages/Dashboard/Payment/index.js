@@ -7,10 +7,10 @@ import UserContext from "../../../contexts/UserContext";
 
 export default function Payment() {
   const { userData } = useContext(UserContext);
-  const [isTicketChosen, setIsTicketChosen] = useState(false);
+  const [isTicketChosen, setIsTicketChosen] = useState(Boolean(userData.ticket));
   const [userOrder, setUserOrder] = useState({
-    total: 0,
-    ticketId: undefined
+    total: userData.ticket?.price || 0,
+    ticketId: userData.ticket?.id
   });
   return (
     <>
