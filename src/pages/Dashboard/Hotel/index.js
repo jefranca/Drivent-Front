@@ -51,6 +51,7 @@ export default function Hotel() {
       });
   }, []);
 
+  //localStorage.clear();
   function getReservation() {
     api.hotel.getHotelReservation(userData.user.id).then((response) => {
       setHotelReservationData(response.data);

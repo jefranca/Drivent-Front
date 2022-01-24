@@ -15,7 +15,6 @@ export default function useApi() {
     cep: new CepApi(),
     enrollment: new EnrollmentApi(),
     hotel: new HotelApi(),
-    //ticketPrice: new TicketPriceApi(),
     ticket: new TicketApi(),
     reservation: new ReservationApi(),
   };

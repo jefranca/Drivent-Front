@@ -21,7 +21,7 @@ const MessageContainer = styled.div`
   margin: auto;
   max-width: 500px;
   width: 90%;
-  height: 100%;
+  height: calc(100% - 80px);
   display: flex;
   justify-content: center;
   align-items: center;
