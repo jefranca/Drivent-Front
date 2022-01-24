@@ -9,7 +9,6 @@ export default function HotelCard({ hotel }) {
     HotelReservationContext
   );
   const [selected, setSelected] = useState(false);
-  hotelReservationData, hotelData;
   useEffect(() => {
     if (hotelData?.id === hotel.id) {
       setSelected(true);
