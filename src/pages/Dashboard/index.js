@@ -100,4 +100,18 @@ const Container = styled.div`
     height: calc(100vh - 80px);
     padding: 20px;
   }
+
+  ::-webkit-scrollbar {
+  width: 16px;
+  }
+
+::-webkit-scrollbar-track {
+  background-color: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(209, 209, 209);
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
 `;
