@@ -12,6 +12,7 @@ export default function Payment() {
     total: userData.ticket?.price || 0,
     ticketId: userData.ticket?.id
   });
+  
   return (
     <>
       <Title> Ingresso e pagamento </Title>
