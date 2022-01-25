@@ -61,7 +61,12 @@ export default function Enroll() {
           <Input label="E-mail" type="text" fullWidth value={email} onChange={e => setEmail(e.target.value)} />
           <Input label="Senha" type="password" fullWidth value={password} onChange={e => setPassword(e.target.value)} />
           <Input label="Repita sua senha" type="password" fullWidth value={confirmPassword} onChange={e => setConfirmPassword(e.target.value)} />
-          <Button type="submit" color="primary" fullWidth disabled={loadingEnroll}>Inscrever</Button>
+          <Button type="submit" color="primary" fullWidth disabled={loadingEnroll}>
+            {loadingEnroll ? 
+              "Carregando..."
+              :
+              "Inscrever"}
+          </Button>
         </form>
       </Row>
       <Row>
