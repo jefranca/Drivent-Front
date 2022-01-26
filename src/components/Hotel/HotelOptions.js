@@ -15,6 +15,5 @@ const BoxHotels = styled.div`
   height: 300px;
   width: 100%;
   display: flex;
-  overflow: none;
-  margin-bottom: 20px;
+  overflow-x: auto;
 `;
