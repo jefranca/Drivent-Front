@@ -15,9 +15,17 @@ export default function RoomOptions({ rooms }) {
 }
 
 const BoxRooms = styled.div`
-  height: 300px;
+  height: 100%;
   width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  overflow-y: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 15px;
+
+  @media (max-width: 850px) {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr 1fr;
+  }
 `;

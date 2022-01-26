@@ -48,13 +48,10 @@ const Card = styled.div`
   background: ${({ selected, noVacancies }) =>
     noVacancies ? "#E9E9E9" : selected ? "#FFEED2" : "#fff"};
   height: 45px;
-  width: 190px;
   font-family: "Roboto";
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-right: 20px;
-  margin-bottom: 15px;
   padding: 0 10px;
   border-radius: 10px;
   border: 1px solid #cecece;
