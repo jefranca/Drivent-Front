@@ -18,4 +18,8 @@ const Button = styled.div`
   justify-content: center;
   color: black;
   cursor: pointer;
+  @media(max-width: 600px) {
+    width: 100%;
+    height: 50px;
+  }
 `;
