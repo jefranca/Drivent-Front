@@ -12,16 +12,27 @@ export default function Activities() {
       <Title>Escolha de atividades</Title>
       {userData.ticket ? (
         <>
-          <h2>Primeiro, filtre pelo dia do evento:</h2>
+          {userData.ticket.type === "online" ? (
+            <BoxMessage>
+              <UnauthorizedMessage>
+                Sua modalidade de ingresso não necessita escolher atividade.
+                Você terá acesso a todas as atividades.
+              </UnauthorizedMessage>
+            </BoxMessage>
+          ) : (
+            <>
+              <h2>Primeiro, filtre pelo dia do evento:</h2>
+              <>Em breve !</>
+            </>
+          )}
         </>
       ) : (
         <BoxMessage>
           <UnauthorizedMessage>
             Você precisa ter confirmado pagamento antes de fazer a escolha de
-            hospedagem
+            atividades
           </UnauthorizedMessage>
         </BoxMessage>
-        
       )}
     </Container>
   );
