@@ -72,10 +72,8 @@ export default function Hotel() {
     api.hotel
       .makeReservation(hotelData.id, hotelData.roomSelected.id)
       .then(() => {
-        toast("Hotel reserved");
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        toast("Booking completed");
+        getHotels();
       })
       .catch((error) => {
         console.error(error);
