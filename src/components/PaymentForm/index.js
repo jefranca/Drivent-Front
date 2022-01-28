@@ -34,26 +34,22 @@ export default function PaymentForm({ userOrder }) {
   const ticketType = ticketTypes[userOrder.ticketId];
 
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
-  
-  const {
-    handleSubmit,
-    handleChange,
-    data,
-    errors,
-  } = useForm({
+
+  const { handleSubmit, handleChange, data, errors } = useForm({
     validations: FormValidations,
 
     onSubmit: () => {
       setDynamicInputIsLoading(true);
-      reservation.postNewReservation({ ticketId: userOrder.ticketId })
+      reservation
+        .postNewReservation({ ticketId: userOrder.ticketId })
         .then((res) => {
           setDynamicInputIsLoading(false);
           toast("Pago com sucesso!");
           setUserData((userData) => ({
             ...userData,
             ticket: {
-              ...res.data
-            }
+              ...res.data,
+            },
           }));
         })
         .catch((error) => {
@@ -69,15 +65,15 @@ export default function PaymentForm({ userOrder }) {
       name: "",
       expiry: "",
       cvc: "",
-      focus: ""
+      focus: "",
     },
   });
 
   const handleChangeSelection = (key) => (e) => {
     const focus = {
       target: {
-        value: key
-      }
+        value: key,
+      },
     };
 
     handleChange("focus")(focus);
@@ -86,15 +82,11 @@ export default function PaymentForm({ userOrder }) {
   return (
     <PaymentContainer>
       <SubTitle variant="h6"> Ingresso </SubTitle>
-      <Ticket 
-        type={ticketType}
-        value={userOrder.total}
-      />
+      <Ticket type={ticketType} value={userOrder.total} />
       <SubTitle variant="h6"> Pagamento </SubTitle>
       {!userData.ticket ? (
         <FormWrapper onSubmit={handleSubmit}>
           <ContainerCard>
-
             <Cards
               cvc={data.cvc}
               expiry={data.expiry}
@@ -110,8 +102,8 @@ export default function PaymentForm({ userOrder }) {
                 label="Card Number"
                 name="number"
                 type="text"
-                style = {{ width: "100%" }}
-                maxLength = "20"
+                style={{ width: "100%" }}
+                maxLength="20"
                 mask="9999 9999 9999 9999"
                 value={data.number || ""}
                 onChange={handleChange("number")}
@@ -124,7 +116,7 @@ export default function PaymentForm({ userOrder }) {
                 label="Name"
                 name="name"
                 type="text"
-                style = {{ width: "100%" }}
+                style={{ width: "100%" }}
                 value={data.name || ""}
                 onChange={handleChange("name")}
                 onSelect={handleChangeSelection("name")}
@@ -138,11 +130,11 @@ export default function PaymentForm({ userOrder }) {
                   label="Valid Thru"
                   name="expiry"
                   type="text"
-                  style = {{ width: "100%" }}
+                  style={{ width: "100%" }}
                   mask="19/99"
-                  formatChars= {{
-                    "1": "[0-1]",
-                    "9": "[0-9]",
+                  formatChars={{
+                    1: "[0-1]",
+                    9: "[0-9]",
                   }}
                   value={data.expiry || ""}
                   onChange={handleChange("expiry")}
@@ -151,15 +143,13 @@ export default function PaymentForm({ userOrder }) {
                 {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
               </InputWrapper>
 
-              <InputWrapper
-                width="50%"
-              >
+              <InputWrapper width="50%">
                 <Input
                   label="CVC"
                   mask="999"
                   name="cvc"
                   type="text"
-                  style = {{ width: "90%", marginLeft: "10%" }}
+                  style={{ width: "90%", marginLeft: "10%" }}
                   value={data.cvc || ""}
                   onChange={handleChange("cvc")}
                   onSelect={handleChangeSelection("cvc")}
@@ -171,28 +161,25 @@ export default function PaymentForm({ userOrder }) {
 
           <SubmitContainer>
             <Button type="submit" disabled={dynamicInputIsLoading}>
-            Finalizar Pagamento
+              {dynamicInputIsLoading ? "Processando..." : "Finalizar Pagamento"}
             </Button>
           </SubmitContainer>
         </FormWrapper>
       ) : (
         <Confirmation />
       )}
-
     </PaymentContainer>
-
   );
 }
 
 const SubTitle = styled(Typography)`
   margin-bottom: 20px !important;
-  color: #8E8E8E;
-
+  color: #8e8e8e;
 `;
 
 const SubmitContainer = styled.div`
-  margin-top: 40px!important;
-  width: 100%!important;
+  margin-top: 40px !important;
+  width: 100% !important;
 
   > button {
     margin-top: 0 !important;

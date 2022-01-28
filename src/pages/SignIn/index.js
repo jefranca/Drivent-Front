@@ -78,7 +78,7 @@ export default function SignIn() {
             fullWidth
             disabled={loadingSignIn}
           >
-            Entrar
+            {loadingSignIn ? "Carregando..." : "Entrar"}
           </Button>
         </form>
       </Row>

@@ -290,7 +290,10 @@ export default function PersonalInformationForm() {
 
           <SubmitContainer>
             <Button type="submit" disabled={dynamicInputIsLoading}>
-              Salvar
+              {dynamicInputIsLoading ? 
+                "Carregando..."
+                :
+                "Salvar"}
             </Button>
           </SubmitContainer>
         </FormWrapper>
