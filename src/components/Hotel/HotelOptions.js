@@ -12,8 +12,12 @@ export default function HotelOptions({ hotels }) {
 }
 
 const BoxHotels = styled.div`
-  height: 300px;
+  padding-bottom: 10px;
   width: 100%;
-  display: flex;
+  display: grid;
   overflow-x: auto;
+  grid-auto-columns: 190px;
+  grid-auto-flow: column;
+  column-gap: 30px;
+  margin-bottom: 10px;
 `;

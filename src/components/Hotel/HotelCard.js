@@ -69,17 +69,21 @@ const Card = styled.div`
   display: flex;
   justify-content: space-around;
   flex-direction: column;
-  margin-right: 20px;
   padding: 18px 14px;
-  img {
-    height: 110px;
-    width: 170px;
-    border-radius: 5px;
-  }
-  & > h3 {
-    font-size: 20px;
-    font-weight: 400;
-    color: #343434;
+  & {
+    :hover {
+      cursor: pointer;
+    }
+    img {
+      height: 110px;
+      width: 170px;
+      border-radius: 5px;
+    }
+    > h3 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #343434;
+    }
   }
 `;
 
