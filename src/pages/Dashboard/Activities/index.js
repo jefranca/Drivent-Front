@@ -1,11 +1,28 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
 import Title from "../../../components/Dashboard/shared/Title";
 import UserContext from "../../../contexts/UserContext";
 import styled from "styled-components";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
+import ActivitiesTable from "../../../components/ActivitiesTable";
+import useApi from "../../../hooks/useApi";
+import { toast } from "react-toastify";
 
 export default function Activities() {
   const { userData } = useContext(UserContext);
+  const { activity } = useApi();
+  const [columns, setColumns] = useState([]);
+
+  useEffect(() => {
+    activity.getActivitiesByDate("2022-02-16")
+      .then((response) => {
+        setColumns(response.data);
+      })
+      .catch((error) => {
+        toast("Erro ao carregar atividades.");
+        // eslint-disable-next-line no-console
+        console.error(error.response);
+      });
+  }, []);
 
   return (
     <Container>
@@ -22,7 +39,7 @@ export default function Activities() {
           ) : (
             <>
               <h2>Primeiro, filtre pelo dia do evento:</h2>
-              <>Em breve !</>
+              <ActivitiesTable columns={columns} />
             </>
           )}
         </>
