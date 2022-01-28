@@ -17,9 +17,6 @@ const Column = ({ title, children, index }) => {
 const Container = styled.div`
 `;
 
-const ColumnBody = styled.div`
-`;
-
 const ColumContent = styled.div`
   padding: 0 14px;
   padding-top: 10px;

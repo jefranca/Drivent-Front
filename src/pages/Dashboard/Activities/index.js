@@ -13,7 +13,7 @@ export default function Activities() {
   const [columns, setColumns] = useState([]);
 
   useEffect(() => {
-    activity.getActivitiesByDate("2022-02-17")
+    activity.getActivitiesByDate("2022-02-16")
       .then((response) => {
         setColumns(response.data);
       })
