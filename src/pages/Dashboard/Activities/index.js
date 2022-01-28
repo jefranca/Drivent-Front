@@ -3,6 +3,7 @@ import Title from "../../../components/Dashboard/shared/Title";
 import UserContext from "../../../contexts/UserContext";
 import styled from "styled-components";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
+import ActivitiesDays from "../../../components/Activities";
 
 export default function Activities() {
   const { userData } = useContext(UserContext);
@@ -22,7 +23,7 @@ export default function Activities() {
           ) : (
             <>
               <h2>Primeiro, filtre pelo dia do evento:</h2>
-              <>Em breve !</>
+              <ActivitiesDays />
             </>
           )}
         </>
