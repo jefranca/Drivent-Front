@@ -1,12 +1,60 @@
-import { useContext } from "react";
+import { useContext, useState, useEffect } from "react";
+import dayjs from "dayjs";
 import Title from "../../../components/Dashboard/shared/Title";
 import UserContext from "../../../contexts/UserContext";
 import styled from "styled-components";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
-import ActivitiesDays from "../../../components/Activities";
+
+import ActivitiesDays from "../../../components/ActivitiesButton";
+
+import ActivitiesTable from "../../../components/ActivitiesTable";
+import useApi from "../../../hooks/useApi";
+import { toast } from "react-toastify";
 
 export default function Activities() {
   const { userData } = useContext(UserContext);
+  const { activity } = useApi();
+  const [columns, setColumns] = useState([]);
+  const [dates, setDates] = useState([]);
+  const [day, setDay] = useState();
+  const [weekDay, setWeekDay] = useState([]);
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    if (day !== undefined) {
+      let date = day.split("/");
+      let correctDate = `${date[2]}-${date[1]}-${date[0]}`;
+      setSelected(day);
+      activity
+        .getActivitiesByDate(correctDate)
+        .then((response) => {
+          setColumns(response.data);
+        })
+        .catch((error) => {
+          toast("Erro ao carregar atividades.");
+          // eslint-disable-next-line no-console
+          console.error(error.response);
+        });
+    }
+  }, [day]);
+  useEffect(
+    () =>
+      activity.getDates().then((res) => {
+        const date1 = [...res.data];
+        let newDates1;
+        let newDates2 = [];
+        let weekdays = [];
+        date1.forEach((date) => {
+          newDates1 = date.split("-");
+          weekdays.push(dayjs(date).day());
+
+          newDates2.push(`${newDates1[2]}/${newDates1[1]}/${newDates1[0]}`);
+        });
+        setDates(newDates2);
+        setWeekDay(weekdays);
+      }),
+    []
+  );
 
   return (
     <Container>
@@ -22,8 +70,15 @@ export default function Activities() {
             </BoxMessage>
           ) : (
             <>
-              <h2>Primeiro, filtre pelo dia do evento:</h2>
-              <ActivitiesDays />
+              {day === undefined ? (
+                <h2>Primeiro, filtre pelo dia do evento:</h2>
+              ) : (
+                ""
+              )}
+
+              <ActivitiesDays selected={selected} dates={dates} weekDay={weekDay} setDay={setDay} day={day} />
+
+              <ActivitiesTable columns={columns} />
             </>
           )}
         </>
