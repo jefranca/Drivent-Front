@@ -35,4 +35,5 @@ const DayButton = styled.div`
   border-radius: 4px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   font-size: 14px;
+  cursor: pointer;
 `;
