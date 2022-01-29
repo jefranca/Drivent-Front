@@ -6,13 +6,13 @@ import {
   IoEnterOutline,
 } from "react-icons/io5";
 
-const Card = ({ name, startsAt, endsAt, lastAt, rooms }) => {
+const Card = ({ name, id, rooms, startsAt, endsAt, lastAt }) => {
   const start = dateToNumber(startsAt);
   const end = dateToNumber(endsAt);
   const last = dateToNumber(lastAt);
   const breakGapCompensation = (start - last) * 10;
   const breakCompensation = (start - last) * 80 + breakGapCompensation;
-
+  console.log(id, rooms);
   const gapCompensation = (end - start - 1) * 10;
   const cardHeight = (end - start) * 80 + gapCompensation;
   const noVacancy = rooms === 0;
@@ -26,9 +26,17 @@ const Card = ({ name, startsAt, endsAt, lastAt, rooms }) => {
         <Information noVacancy={noVacancy} disabled={noVacancy}>
           {rooms > 0 ? (
             <>
-              <IoEnterOutline color="#078632" size={20} />
-              <IoCheckmarkCircleOutline color="#078632" size={20} />
-              <p> {rooms} vagas</p>
+              {id === mockUserActivieId ? (
+                <>
+                  <IoCheckmarkCircleOutline color="#078632" size={20} />
+                  <p>Inscrito</p>
+                </>
+              ) : (
+                <>
+                  <IoEnterOutline color="#078632" size={20} />
+                  <p> {rooms} vagas</p>
+                </>
+              )}
             </>
           ) : (
             <>
