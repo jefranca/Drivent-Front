@@ -7,7 +7,6 @@ const CardInfo = ({ name, startsAt, endsAt }) => {
       <CardTitle> {name} </CardTitle>
       <CardTime>
         {startsAt} - {endsAt}
-        aa
       </CardTime>
     </Container>
   );

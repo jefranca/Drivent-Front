@@ -10,18 +10,34 @@ const Card = ({ name, startsAt, endsAt, lastAt, rooms }) => {
   const start = dateToNumber(startsAt);
   const end = dateToNumber(endsAt);
   const last = dateToNumber(lastAt);
-  console.log(rooms);
   const breakGapCompensation = (start - last) * 10;
   const breakCompensation = (start - last) * 80 + breakGapCompensation;
 
   const gapCompensation = (end - start - 1) * 10;
   const cardHeight = (end - start) * 80 + gapCompensation;
+  const noVacancy = rooms === 0;
+  const mockUserActivieId = 1;
 
   return (
     <Container height={cardHeight} marginTop={breakCompensation}>
       <CardInfo name={name} startsAt={startsAt} endsAt={endsAt} />
       <Division></Division>
-      <InformationVacancies>{rooms}</InformationVacancies>
+      <InformationVacancies>
+        <Information noVacancy={noVacancy} disabled={noVacancy}>
+          {rooms > 0 ? (
+            <>
+              <IoEnterOutline color="#078632" size={20} />
+              <IoCheckmarkCircleOutline color="#078632" size={20} />
+              <p> {rooms} vagas</p>
+            </>
+          ) : (
+            <>
+              <IoCloseCircleOutline color="#CC6666" size={20} />
+              <p>Esgotado</p>
+            </>
+          )}
+        </Information>
+      </InformationVacancies>
     </Container>
   );
 };
@@ -48,16 +64,32 @@ const Container = styled.div`
 const Division = styled.div`
   height: 100%;
   width: 0px;
-  margin-right: 10px;
+  margin-right: 5px;
   border: 1px solid #cfcfcf;
 `;
 
 const InformationVacancies = styled.div`
   height: 100%;
-  background-color: yellow;
+  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
+`;
+
+const Information = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 60px;
+  cursor: ${({ disabled }) => (disabled ? "not-allow" : "pointer")};
+  p {
+    font-family: Roboto;
+    font-size: 9px;
+    font-weight: 400;
+    margin-top: 5px;
+    color: ${({ noVacancy }) => (noVacancy ? "#CC6666" : "#078632")};
+  }
 `;
 
 export default Card;
