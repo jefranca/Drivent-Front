@@ -1,12 +1,10 @@
 import { useContext, useState, useEffect } from "react";
+import styled from "styled-components";
 import dayjs from "dayjs";
 import Title from "../../../components/Dashboard/shared/Title";
 import UserContext from "../../../contexts/UserContext";
-import styled from "styled-components";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
-
 import ActivitiesDays from "../../../components/ActivitiesButton";
-
 import ActivitiesTable from "../../../components/ActivitiesTable";
 import useApi from "../../../hooks/useApi";
 import { toast } from "react-toastify";
@@ -19,24 +17,31 @@ export default function Activities() {
   const [day, setDay] = useState();
   const [weekDay, setWeekDay] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [activityReservationData, setActivityReservationData] = useState(null);
 
+  let correctDate;
+
+  function getActivities(date) {
+    activity
+      .getActivitiesByDate(date)
+      .then((response) => {
+        setColumns(response.data);
+      })
+      .catch((error) => {
+        toast("Erro ao carregar atividades.");
+        // eslint-disable-next-line no-console
+        console.error(error.response);
+      });
+  }
   useEffect(() => {
     if (day !== undefined) {
       let date = day.split("/");
-      let correctDate = `${date[2]}-${date[1]}-${date[0]}`;
+      correctDate = `${date[2]}-${date[1]}-${date[0]}`;
       setSelected(day);
-      activity
-        .getActivitiesByDate(correctDate)
-        .then((response) => {
-          setColumns(response.data);
-        })
-        .catch((error) => {
-          toast("Erro ao carregar atividades.");
-          // eslint-disable-next-line no-console
-          console.error(error.response);
-        });
+      getActivities(correctDate);
     }
   }, [day]);
+
   useEffect(
     () =>
       activity.getDates().then((res) => {
@@ -47,7 +52,6 @@ export default function Activities() {
         date1.forEach((date) => {
           newDates1 = date.split("-");
           weekdays.push(dayjs(date).day());
-
           newDates2.push(`${newDates1[2]}/${newDates1[1]}/${newDates1[0]}`);
         });
         setDates(newDates2);
@@ -82,7 +86,12 @@ export default function Activities() {
                 setDay={setDay}
                 day={day}
               />
-              <ActivitiesTable columns={columns} />
+              <ActivitiesTable
+                columns={columns}
+                setActivityReservationData={setActivityReservationData}
+                getActivities={getActivities}
+                day={day}
+              />
             </>
           )}
         </>
