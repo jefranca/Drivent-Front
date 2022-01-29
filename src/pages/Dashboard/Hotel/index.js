@@ -73,9 +73,7 @@ export default function Hotel() {
       .makeReservation(hotelData.id, hotelData.roomSelected.id)
       .then(() => {
         toast("Hotel reserved");
-        setTimeout(() => {
-          window.location.reload();
-        }, 3000);
+        getHotels();
       })
       .catch((error) => {
         console.error(error);
@@ -156,7 +154,7 @@ const ChangeButton = styled(Button)`
   font-family: Roboto;
   font-weight: 400;
   color: #000;
-  @media(max-width: 600px){
+  @media (max-width: 600px) {
     width: 100%;
     height: 50px;
   }

@@ -75,9 +75,13 @@ export default function Activities() {
               ) : (
                 ""
               )}
-
-              <ActivitiesDays selected={selected} dates={dates} weekDay={weekDay} setDay={setDay} day={day} />
-
+              <ActivitiesDays
+                selected={selected}
+                dates={dates}
+                weekDay={weekDay}
+                setDay={setDay}
+                day={day}
+              />
               <ActivitiesTable columns={columns} />
             </>
           )}

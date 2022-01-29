@@ -5,7 +5,10 @@ const CardInfo = ({ name, startsAt, endsAt }) => {
   return (
     <Container>
       <CardTitle> {name} </CardTitle>
-      <CardTime> {startsAt} - {endsAt} </CardTime>
+      <CardTime>
+        {startsAt} - {endsAt}
+        aa
+      </CardTime>
     </Container>
   );
 };
