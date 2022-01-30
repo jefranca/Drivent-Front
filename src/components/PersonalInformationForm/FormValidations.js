@@ -16,7 +16,7 @@ const validations = {
   phone: {
     custom: {
       isValid: (value) => {
-        if (value.length === 15 && value[5] !== "9") {
+        if (value.length === 16 && value[5] !== "9") {
           return false;
         }
 
