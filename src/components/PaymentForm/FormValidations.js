@@ -8,7 +8,7 @@ const validations = {
 
   name: {
     custom: {
-      isValid: (value) => isValidString(value),
+      isValid: (value) => isValidString(value) && value.length > 0,
       message: "Digite um nome válido",
     },
   },

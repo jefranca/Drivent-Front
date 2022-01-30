@@ -161,8 +161,7 @@ export default function PersonalInformationForm() {
           <InputWrapper>
             <Input
               label="Nome Completo"
-              error={Boolean(errors.name)}
-              helperText={errors.name}
+              error={errors.name}
               name="name"
               type="text"
               value={data.name || ""}
@@ -176,8 +175,7 @@ export default function PersonalInformationForm() {
               type="text"
               maxLength="14"
               mask="999.999.999-99"
-              error={Boolean(errors.cpf)}
-              helperText={errors.cpf}
+              error={errors.cpf}
               value={data.cpf || ""}
               onChange={handleChange("cpf")}
             />
@@ -209,8 +207,7 @@ export default function PersonalInformationForm() {
                 data.phone.length < 15 ? "(99) 9999-999999" : "(99) 99999-9999"
               }
               name="phone"
-              error={Boolean(errors.phone)}
-              helperText={errors.phone}
+              error={errors.phone}
               value={data.phone || ""}
               onChange={handleChange("phone")}
             />
@@ -220,8 +217,7 @@ export default function PersonalInformationForm() {
               label="CEP"
               name="cep"
               mask="99999-999"
-              error={Boolean(errors.cep)}
-              helperText={errors.cep}
+              error={errors.cep}
               value={data.cep || ""}
               onChange={(e) => {
                 handleChange("cep")(e);
@@ -234,8 +230,7 @@ export default function PersonalInformationForm() {
               label="Estado"
               name="state"
               id="state"
-              error={Boolean(errors.state)}
-              helperText={errors.state}
+              error={errors.state}
               value={data.state || ""}
               onChange={handleChange("state")}
             >
@@ -254,8 +249,7 @@ export default function PersonalInformationForm() {
             <Input
               label="Cidade"
               name="city"
-              error={Boolean(errors.city)}
-              helperText={errors.city}
+              error={errors.city}
               value={data.city || ""}
               onChange={handleChange("city")}
               disabled={dynamicInputIsLoading}
@@ -265,8 +259,7 @@ export default function PersonalInformationForm() {
             <Input
               label="Rua"
               name="street"
-              error={Boolean(errors.street)}
-              helperText={errors.street}
+              error={errors.street}
               value={data.street || ""}
               onChange={handleChange("street")}
               disabled={dynamicInputIsLoading}
@@ -277,18 +270,17 @@ export default function PersonalInformationForm() {
             <Input
               label="Número"
               name="number"
-              error={Boolean(errors.number)}
-              helperText={errors.number}
+              error={errors.number}
               value={data.number || ""}
               onChange={handleChange("number")}
+              disabled={dynamicInputIsLoading}
             />
           </InputWrapper>
           <InputWrapper>
             <Input
               label="Bairro"
               name="neighborhood"
-              error={Boolean(errors.neighborhood)}
-              helperText={errors.neighborhood}
+              error={errors.neighborhood}
               value={data.neighborhood || ""}
               onChange={handleChange("neighborhood")}
               disabled={dynamicInputIsLoading}

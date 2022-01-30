@@ -21,18 +21,16 @@ export default function MultiSelect({
   onChange,
   children,
   error,
-  helperText,
 }) {
   const inputLabelRef = useRef(null);
 
   return (
     <FormControlWrapper>
-      <FormControl variant="outlined" error={error} >
+      <FormControl variant="outlined" error={Boolean(error)} >
         <InputLabel ref={inputLabelRef} htmlFor={id}>
           {label}
         </InputLabel>
         <Select
-          error={error}
           value={value}
           onChange={onChange}
           input={
@@ -48,7 +46,7 @@ export default function MultiSelect({
           {children}
         </Select>
         {error && (
-          <FormHelperText error={error}>{helperText}</FormHelperText>
+          <FormHelperText error={Boolean(error)}>{error}</FormHelperText>
         )}
       </FormControl>
     </FormControlWrapper>
