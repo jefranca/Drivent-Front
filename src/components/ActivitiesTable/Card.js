@@ -19,6 +19,7 @@ const Card = ({
   getReservation,
   day,
   getActivities,
+  reservationIds,
 }) => {
   const start = dateToNumber(startsAt);
   const end = dateToNumber(endsAt);
@@ -29,12 +30,11 @@ const Card = ({
   const cardHeight = (end - start) * 80 + gapCompensation;
   const { activity } = useApi();
   const noVacancy = rooms === 0;
-  const mockUserActivieId = 1;
 
-  function check(e) {
+  function saveReservation() {
     activity
-      .makeReservation(4)
-      .then((response) => {
+      .makeReservation(id)
+      .then(() => {
         toast("Reserva concluida");
         getReservation();
         let date = day.split("/");
@@ -42,6 +42,9 @@ const Card = ({
         getActivities(correctDate);
       })
       .catch((error) => {
+        if (error.response.status === 409) {
+          toast("Conflito de horários, a reserva não pode ser efetuada");
+        }
         console.error(error);
       });
   }
@@ -51,10 +54,13 @@ const Card = ({
       <CardInfo name={name} startsAt={startsAt} endsAt={endsAt} />
       <Division></Division>
       <InformationVacancies>
-        <Information noVacancy={noVacancy} disabled={noVacancy}>
+        <Information
+          noVacancy={noVacancy}
+          disabled={noVacancy || reservationIds.includes(id)}
+        >
           {rooms > 0 ? (
             <>
-              {id === mockUserActivieId ? (
+              {reservationIds.includes(id) ? (
                 <>
                   <IoCheckmarkCircleOutline color="#078632" size={20} />
                   <p>Inscrito</p>
@@ -64,7 +70,7 @@ const Card = ({
                   <IoEnterOutline
                     color="#078632"
                     size={20}
-                    onClick={(e) => check(e)}
+                    onClick={saveReservation}
                   />
                   <p> {rooms} vagas</p>
                 </>

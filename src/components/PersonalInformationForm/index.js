@@ -74,7 +74,7 @@ export default function PersonalInformationForm() {
             toast("Não foi possível");
           }
           /* eslint-disable-next-line no-console */
-          console.log(error);
+          console.error(error);
         });
     },
 

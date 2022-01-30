@@ -1,17 +1,17 @@
 /* eslint-disable no-console */
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import useApi from "../../hooks/useApi";
 import Card from "./Card";
 import Column from "./Column";
 
-export default function ActivitiesTable({
-  columns,
-  setActivityReservationData,
-  getActivities,
-  day,
-}) {
+export default function ActivitiesTable({ columns, getActivities, day }) {
   const { activity } = useApi();
+  const [activityReservationData, setActivityReservationData] = useState(null);
+
+  let reservationIds = activityReservationData?.map(
+    (reservation) => reservation.activityId
+  );
 
   function getReservation() {
     activity
@@ -38,6 +38,8 @@ export default function ActivitiesTable({
                 getReservation={getReservation}
                 day={day}
                 getActivities={getActivities}
+                activityReservationData={activityReservationData}
+                reservationIds={reservationIds}
               />
             ))}
           </Column>

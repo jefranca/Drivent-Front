@@ -1,13 +1,13 @@
 import { useContext, useState, useEffect } from "react";
 import styled from "styled-components";
 import dayjs from "dayjs";
+import { toast } from "react-toastify";
 import Title from "../../../components/Dashboard/shared/Title";
 import UserContext from "../../../contexts/UserContext";
 import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
 import ActivitiesDays from "../../../components/ActivitiesButton";
 import ActivitiesTable from "../../../components/ActivitiesTable";
 import useApi from "../../../hooks/useApi";
-import { toast } from "react-toastify";
 
 export default function Activities() {
   const { userData } = useContext(UserContext);
@@ -17,9 +17,6 @@ export default function Activities() {
   const [day, setDay] = useState();
   const [weekDay, setWeekDay] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [activityReservationData, setActivityReservationData] = useState(null);
-
-  let correctDate;
 
   function getActivities(date) {
     activity
@@ -36,7 +33,7 @@ export default function Activities() {
   useEffect(() => {
     if (day !== undefined) {
       let date = day.split("/");
-      correctDate = `${date[2]}-${date[1]}-${date[0]}`;
+      let correctDate = `${date[2]}-${date[1]}-${date[0]}`;
       setSelected(day);
       getActivities(correctDate);
     }
@@ -88,7 +85,6 @@ export default function Activities() {
               />
               <ActivitiesTable
                 columns={columns}
-                setActivityReservationData={setActivityReservationData}
                 getActivities={getActivities}
                 day={day}
               />
