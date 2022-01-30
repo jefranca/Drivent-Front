@@ -17,4 +17,24 @@ export default class ActivityApi extends AuthenticatedApi {
       },
     });
   }
+
+  getActivitiesReservation() {
+    return api.get("/activities-reservation", {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      },
+    });
+  }
+
+  makeReservation(id) {
+    return api.post(
+      `/activities-reservation/subscription/${id}`,
+      {},
+      {
+        headers: {
+          ...this.getAuthorizationHeader(),
+        },
+      }
+    );
+  }
 }

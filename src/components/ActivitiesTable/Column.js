@@ -4,18 +4,13 @@ import Typography from "@material-ui/core/Typography";
 const Column = ({ title, children, index }) => {
   return (
     <Container>
-      <ColumnTitle>
-        {title}
-      </ColumnTitle>
-      <ColumContent index={index}>
-        {children}
-      </ColumContent>
+      <ColumnTitle>{title}</ColumnTitle>
+      <ColumContent index={index}>{children}</ColumContent>
     </Container>
   );
 };
 
-const Container = styled.div`
-`;
+const Container = styled.div``;
 
 const ColumContent = styled.div`
   padding: 0 14px;
@@ -24,10 +19,10 @@ const ColumContent = styled.div`
   flex-direction: column;
   align-items: center;
   height: 100%;
-  border-top: 1px solid #D7D7D7;
-  border-right: 1px solid #D7D7D7;
-  border-bottom: 1px solid #D7D7D7;
-  border-left: ${({ index }) => index === 0? "1px solid #D7D7D7" : "" };
+  border-top: 1px solid #d7d7d7;
+  border-right: 1px solid #d7d7d7;
+  border-bottom: 1px solid #d7d7d7;
+  border-left: ${({ index }) => (index === 0 ? "1px solid #D7D7D7" : "")};
 `;
 
 const ColumnTitle = styled(Typography)`
