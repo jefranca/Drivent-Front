@@ -1,5 +1,4 @@
 import { useState, useContext } from "react";
-import { toast } from "react-toastify";
 
 import AuthLayout from "../../layouts/Auth";
 
