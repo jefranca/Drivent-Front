@@ -10,6 +10,7 @@ import { Row, Title, Label } from "../../components/Auth";
 import Link from "../../components/Link";
 
 import EventInfoContext from "../../contexts/EventInfoContext";
+import UserContext from "../../contexts/UserContext";
 
 import useApi from "../../hooks/useApi";
 
@@ -19,11 +20,23 @@ export default function Enroll() {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loadingEnroll, setLoadingEnroll] = useState(false);
 
+  const { setUserData } = useContext(UserContext);
   const history = useHistory();
 
   const api = useApi();
 
   const { eventInfo } = useContext(EventInfoContext);
+
+  const signIn = (email, password) => {
+    api.auth
+      .signIn(email, password)
+      .then((response) => {
+        setUserData(response.data);
+      })
+      .catch(() => {
+        history.push("sign-in");
+      });
+  };
 
   function submit(event) {
     event.preventDefault();
@@ -35,8 +48,8 @@ export default function Enroll() {
       api.user
         .signUp(email, password)
         .then((response) => {
-          toast("Inscrito com sucesso! Por favor, faça login.");
-          history.push("/sign-in");
+          toast("Inscrito com sucesso!");
+          signIn(email, password);
         })
         .catch((error) => {
           if (error.response) {
