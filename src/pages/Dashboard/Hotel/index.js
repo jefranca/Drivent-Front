@@ -23,6 +23,7 @@ export default function Hotel() {
     HotelReservationContext
   );
   const [hotels, setHotels] = useState(null);
+  const [hotelIsLoading, setHotelIsLoading] = useState(false);
   const hotelRef = useRef();
   const api = useApi();
 
@@ -69,14 +70,18 @@ export default function Hotel() {
   }
 
   function makeReservation() {
+    setHotelIsLoading(true);
     api.hotel
       .makeReservation(hotelData.id, hotelData.roomSelected.id)
       .then(() => {
-        toast("Hotel reserved");
+        toast("Booking completed");
         getHotels();
       })
       .catch((error) => {
         console.error(error);
+      })
+      .then(() => {
+        setHotelIsLoading(false);
       });
   }
 
@@ -97,8 +102,11 @@ export default function Hotel() {
                 {hotels ? <HotelOptions hotels={hotels} /> : ""}
                 {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
                 {hotelData?.roomSelected ? (
-                  <ChangeButton onClick={makeReservation}>
-                    RESERVAR QUARTO
+                  <ChangeButton
+                    onClick={makeReservation}
+                    disabled={hotelIsLoading}
+                  >
+                    {hotelIsLoading ? "Processando..." : "RESERVAR QUARTO"}
                   </ChangeButton>
                 ) : (
                   ""

@@ -31,7 +31,7 @@ const TicketBody = styled.div`
 
 const Type = styled(Typography)`
   margin-bottom: 10px !important;
-  color: #00000;
+  color: #000000;
 `;
 
 const Value = styled(Typography)`
