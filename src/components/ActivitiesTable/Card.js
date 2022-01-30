@@ -50,7 +50,11 @@ const Card = ({
   }
 
   return (
-    <Container height={cardHeight} marginTop={breakCompensation}>
+    <Container
+      height={cardHeight}
+      marginTop={breakCompensation}
+      reserved={reservationIds.includes(id)}
+    >
       <CardInfo name={name} startsAt={startsAt} endsAt={endsAt} />
       <Division></Division>
       <InformationVacancies>
@@ -101,7 +105,7 @@ const Container = styled.div`
   width: 100%;
   height: ${({ height }) => height}px;
   margin-top: ${({ marginTop }) => marginTop}px;
-  background: #f1f1f1;
+  background: ${({ reserved }) => (reserved ? "#D0FFDB" : "#f1f1f1")};
   border: 1px solid #ffffff;
   border-radius: 5px;
   display: flex;
