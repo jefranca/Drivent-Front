@@ -30,19 +30,22 @@ export default function SignIn() {
     api.auth
       .signIn(email, password)
       .then((response) => {
+        setLoadingSignIn(false);
         setUserData(response.data);
       })
       .catch((error) => {
         /* eslint-disable-next-line no-console */
-        console.error(error);
+        console.error(error.response);
+        setLoadingSignIn(false);
 
-        if (error.response) {
-          for (const detail of error.response.data.details) {
-            toast(detail);
-          }
-        } else {
-          toast("Não foi possível conectar ao servidor!");
+        const { status } = error.response;
+
+        if (status === 401) {
+          toast("E-mail ou senha incorreta");
+          return;
         }
+  
+        toast("Não foi possível conectar ao servidor!");
       })
       .then(() => {
         setLoadingSignIn(false);
