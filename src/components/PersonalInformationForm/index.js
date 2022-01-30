@@ -35,6 +35,7 @@ export default function PersonalInformationForm() {
     handleChange,
     data,
     errors,
+    setErrors,
     setData,
     customHandleChange,
   } = useForm({
@@ -66,15 +67,22 @@ export default function PersonalInformationForm() {
           setUserData((userData) => ({ ...userData, fullRegistration: true }));
         })
         .catch((error) => {
+          /* eslint-disable-next-line no-console */
+          console.log(error);
+
           if (error.response?.data?.details) {
             for (const detail of error.response.data.details) {
               toast(detail);
             }
-          } else {
-            toast("Não foi possível");
+            return;
+          } 
+
+          if (error.response.status === 409) {
+            setErrors((data) => ({ ...data, cpf: "Este CPF já está cadastrado" }));
+            return;
           }
-          /* eslint-disable-next-line no-console */
-          console.log(error);
+
+          toast("Não foi possível");
         });
     },
 

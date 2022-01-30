@@ -68,5 +68,6 @@ export const useForm = (options) => {
     customHandleChange,
     handleSubmit,
     errors,
+    setErrors,
   };
 };
