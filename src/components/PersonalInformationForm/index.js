@@ -17,7 +17,6 @@ import Select from "../../components/Form/Select";
 import { FormWrapper } from "./FormWrapper";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { InputWrapper } from "./InputWrapper";
-import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
 
@@ -162,12 +161,13 @@ export default function PersonalInformationForm() {
           <InputWrapper>
             <Input
               label="Nome Completo"
+              error={Boolean(errors.name)}
+              helperText={errors.name}
               name="name"
               type="text"
               value={data.name || ""}
               onChange={handleChange("name")}
             />
-            {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
@@ -176,16 +176,17 @@ export default function PersonalInformationForm() {
               type="text"
               maxLength="14"
               mask="999.999.999-99"
+              error={Boolean(errors.cpf)}
+              helperText={errors.cpf}
               value={data.cpf || ""}
               onChange={handleChange("cpf")}
             />
-            {errors.cpf && <ErrorMsg>{errors.cpf}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <CustomDatePicker
               name="birthday"
-              error={false}
-              helperText={null}
+              error={Boolean(errors.birthday)}
+              helperText={errors.birthday}
               format="dd-MM-yyyy"
               label="Data de Nascimento"
               inputVariant="outlined"
@@ -200,7 +201,6 @@ export default function PersonalInformationForm() {
                 )(date);
               }}
             />
-            {errors.birthday && <ErrorMsg>{errors.birthday}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
@@ -209,29 +209,33 @@ export default function PersonalInformationForm() {
                 data.phone.length < 15 ? "(99) 9999-999999" : "(99) 99999-9999"
               }
               name="phone"
+              error={Boolean(errors.phone)}
+              helperText={errors.phone}
               value={data.phone || ""}
               onChange={handleChange("phone")}
             />
-            {errors.phone && <ErrorMsg>{errors.phone}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="CEP"
               name="cep"
               mask="99999-999"
+              error={Boolean(errors.cep)}
+              helperText={errors.cep}
               value={data.cep || ""}
               onChange={(e) => {
                 handleChange("cep")(e);
                 handleCepChanges(e);
               }}
             />
-            {errors.cep && <ErrorMsg>{errors.cep}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Select
               label="Estado"
               name="state"
               id="state"
+              error={Boolean(errors.state)}
+              helperText={errors.state}
               value={data.state || ""}
               onChange={handleChange("state")}
             >
@@ -244,48 +248,51 @@ export default function PersonalInformationForm() {
                 </MenuItem>
               ))}
             </Select>
-            {errors.state && <ErrorMsg>{errors.state}</ErrorMsg>}
           </InputWrapper>
 
           <InputWrapper>
             <Input
               label="Cidade"
               name="city"
+              error={Boolean(errors.city)}
+              helperText={errors.city}
               value={data.city || ""}
               onChange={handleChange("city")}
               disabled={dynamicInputIsLoading}
             />
-            {errors.city && <ErrorMsg>{errors.city}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="Rua"
               name="street"
+              error={Boolean(errors.street)}
+              helperText={errors.street}
               value={data.street || ""}
               onChange={handleChange("street")}
               disabled={dynamicInputIsLoading}
             />
-            {errors.street && <ErrorMsg>{errors.street}</ErrorMsg>}
           </InputWrapper>
 
           <InputWrapper>
             <Input
               label="Número"
               name="number"
+              error={Boolean(errors.number)}
+              helperText={errors.number}
               value={data.number || ""}
               onChange={handleChange("number")}
             />
-            {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="Bairro"
               name="neighborhood"
+              error={Boolean(errors.neighborhood)}
+              helperText={errors.neighborhood}
               value={data.neighborhood || ""}
               onChange={handleChange("neighborhood")}
               disabled={dynamicInputIsLoading}
             />
-            {errors.neighborhood && <ErrorMsg>{errors.neighborhood}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input

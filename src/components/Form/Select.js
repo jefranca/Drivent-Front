@@ -2,6 +2,7 @@ import { useRef } from "react";
 import ReactDOM from "react-dom";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
+import FormHelperText from "@material-ui/core/FormHelperText";
 import OutlinedInput from "@material-ui/core/OutlinedInput";
 import InputLabel from "@material-ui/core/InputLabel";
 import styled from "styled-components";
@@ -19,16 +20,19 @@ export default function MultiSelect({
   value,
   onChange,
   children,
+  error,
+  helperText,
 }) {
   const inputLabelRef = useRef(null);
 
   return (
     <FormControlWrapper>
-      <FormControl variant="outlined">
+      <FormControl variant="outlined" error={error} >
         <InputLabel ref={inputLabelRef} htmlFor={id}>
           {label}
         </InputLabel>
         <Select
+          error={error}
           value={value}
           onChange={onChange}
           input={
@@ -43,6 +47,9 @@ export default function MultiSelect({
         >
           {children}
         </Select>
+        {error && (
+          <FormHelperText error={error}>{helperText}</FormHelperText>
+        )}
       </FormControl>
     </FormControlWrapper>
   );
