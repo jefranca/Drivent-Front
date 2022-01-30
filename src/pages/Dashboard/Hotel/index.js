@@ -49,7 +49,10 @@ export default function Hotel() {
       .getAllHotels()
       .then((response) => {
         setHotels(response.data);
-        getReservation();
+        console.log(response.data);
+        setTimeout(() => {
+          getReservation();
+        }, 1000);
       })
       .catch((error) => {
         console.error(error);
@@ -58,6 +61,7 @@ export default function Hotel() {
 
   function getReservation() {
     api.hotel.getHotelReservation(userData.user.id).then((response) => {
+      console.log(userData.user);
       setHotelReservationData(response.data);
       if (hotelReservationData) {
         setUserData({
