@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable no-console */
-import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
+import UnauthorizedMessage from "../../../components/shared/UnauthorizedMessage";
 import styled from "styled-components";
 import { useContext, useRef } from "react";
 import UserContext from "../../../contexts/UserContext";
@@ -14,7 +14,7 @@ import HotelReservationContext from "../../../contexts/HotelReservationContext";
 import ReservationReview from "./ReservationReview";
 import { toast } from "react-toastify";
 import Button from "../../../components/Form/Button";
-import Title from "../../../components/Dashboard/shared/Title";
+import Title from "../../../components/shared/Title";
 
 export default function Hotel() {
   const { userData, setUserData } = useContext(UserContext);
@@ -74,7 +74,7 @@ export default function Hotel() {
     api.hotel
       .makeReservation(hotelData.id, hotelData.roomSelected.id)
       .then(() => {
-        toast("Booking completed");
+        toast("Quarto reservado");
         getHotels();
       })
       .catch((error) => {

@@ -1,9 +1,9 @@
 import { useContext, useState, useEffect } from "react";
 import dayjs from "dayjs";
-import Title from "../../../components/Dashboard/shared/Title";
+import Title from "../../../components/shared/Title";
 import UserContext from "../../../contexts/UserContext";
 import styled from "styled-components";
-import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
+import UnauthorizedMessage from "../../../components/shared/UnauthorizedMessage";
 
 import ActivitiesDays from "../../../components/ActivitiesButton";
 
