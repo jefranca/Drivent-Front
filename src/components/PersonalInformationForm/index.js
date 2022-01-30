@@ -81,8 +81,9 @@ export default function PersonalInformationForm() {
             setErrors((data) => ({ ...data, cpf: "Este CPF já está cadastrado" }));
             return;
           }
-
           toast("Não foi possível");
+          /* eslint-disable-next-line no-console */
+          console.error(error);
         });
     },
 

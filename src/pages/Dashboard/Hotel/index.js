@@ -106,7 +106,10 @@ export default function Hotel() {
                 {hotels ? <HotelOptions hotels={hotels} /> : ""}
                 {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
                 {hotelData?.roomSelected ? (
-                  <ChangeButton onClick={makeReservation} disabled={hotelIsLoading}>
+                  <ChangeButton
+                    onClick={makeReservation}
+                    disabled={hotelIsLoading}
+                  >
                     {hotelIsLoading ? "Processando..." : "RESERVAR QUARTO"}
                   </ChangeButton>
                 ) : (
@@ -163,7 +166,7 @@ const ChangeButton = styled(Button)`
   font-family: Roboto;
   font-weight: 400;
   color: #000;
-  @media(max-width: 600px){
+  @media (max-width: 600px) {
     width: 100%;
     height: 50px;
   }

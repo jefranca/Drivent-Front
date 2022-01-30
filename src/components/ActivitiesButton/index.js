@@ -14,7 +14,6 @@ export default function ActivitiesDays({ dates, setDay, day, weekDay }) {
           weekDay={weekDay}
           index={index}
         />
-        
       ))}
     </DaysMenu>
   );
