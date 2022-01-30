@@ -56,7 +56,7 @@ export default function PersonalInformationForm() {
         },
         phone: data.phone
           .replace(/[^0-9]+/g, "")
-          .replace(/^(\d{2})(9?\d{4})(\d{4})$/, "($1) $2-$3"),
+          .replace(/^(\d{2})([0-9]?\d{4})(\d{4})$/, "($1) $2-$3"),
       };
 
       enrollment
@@ -198,8 +198,8 @@ export default function PersonalInformationForm() {
             <Input
               label="Telefone"
               mask={
-                data.phone.length < 15 ? "(99) 9999-99999" : "(99) 99999-9999"
-              } // o 9 extra no primeiro é para permitir digitar um número a mais e então passar pra outra máscara - gambiarra? temos
+                data.phone.length < 15 ? "(99) 9999-999999" : "(99) 99999-9999"
+              }
               name="phone"
               value={data.phone || ""}
               onChange={handleChange("phone")}
