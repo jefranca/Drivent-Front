@@ -67,7 +67,7 @@ export default function NavigationBar() {
         </ConditionalLink>
       </Container>
 
-      <NavigationButton onClick={logout}>
+      <NavigationButton onClick={logout} desktop={true}>
         <LogoutIcon />
         <span> Sair </span>
       </NavigationButton>    
@@ -97,10 +97,17 @@ const Menu = styled.div`
     width: 100%;
     height: 80px;
     flex-direction: row;
+    align-items: space-between;
   }
 `;
 
 const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  @media (max-width: 600px) {
+    flex-direction: row;
+  }
 
   > a {
       text-decoration: none;
