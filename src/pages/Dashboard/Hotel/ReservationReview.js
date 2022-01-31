@@ -11,7 +11,7 @@ export default function ReservationReview() {
     HotelReservationContext
   );
   const history = useHistory();
-  console.log(hotelReservationData);
+
   function getNewRoom() {
     history.push("/dashboard/hotel");
     setHotelReservationData(null);
