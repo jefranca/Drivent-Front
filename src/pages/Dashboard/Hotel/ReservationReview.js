@@ -1,18 +1,29 @@
+import { useContext } from "react";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 import Button from "../../../components/Form/Button";
 import HotelReview from "../../../components/Hotel/HotelReview";
+import Title from "../../../components/shared/Title";
+import HotelReservationContext from "../../../contexts/HotelReservationContext";
 
-export default function ReservationReview({
-  hotelReservationData,
-  setHotelReservationData,
-}) {
+export default function ReservationReview() {
+  const { hotelReservationData, setHotelReservationData } = useContext(
+    HotelReservationContext
+  );
+  const history = useHistory();
+
+  function getNewRoom() {
+    history.push("/dashboard/hotel");
+    setHotelReservationData(null);
+  }
+
   return (
     <Container>
+      <Title> Escolha de hotel e quarto </Title>
+
       <h2>Você já escolheu seu quarto</h2>
       <HotelReview hotelReservationData={hotelReservationData} />
-      <ChangeButton onClick={() => setHotelReservationData(null)}>
-        trocar de quarto
-      </ChangeButton>
+      <ChangeButton onClick={getNewRoom}>trocar de quarto</ChangeButton>
     </Container>
   );
 }
@@ -38,7 +49,7 @@ const ChangeButton = styled(Button)`
   font-family: Roboto;
   font-weight: 400;
   color: #000;
-  @media(max-width: 600px){
+  @media (max-width: 600px) {
     width: 100%;
     height: 50px;
   }

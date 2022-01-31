@@ -1,10 +1,5 @@
 import { useContext, useEffect } from "react";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useRouteMatch
-} from "react-router-dom";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
 
 import EventInfoContext from "../../contexts/EventInfoContext";
@@ -20,6 +15,7 @@ import Certificate from "./Certificate";
 import useApi from "../../hooks/useApi";
 
 import UserContext from "../../contexts/UserContext";
+import ReservationReview from "./Hotel/ReservationReview";
 
 export default function Dashboard() {
   const { eventInfo } = useContext(EventInfoContext);
@@ -28,29 +24,27 @@ export default function Dashboard() {
   const { enrollment, reservation } = useApi();
 
   useEffect(() => {
-    enrollment.getPersonalInformations().then(response => {
+    enrollment.getPersonalInformations().then((response) => {
       if (response.data) {
-        reservation.getReservationInfo()
-          .then((res) => {
-            setUserData((userData) => ({
-              ...userData,
-              fullRegistration: true,
-              ticket: {
-                ...res.data
-              }
-            }));
-          });
+        reservation.getReservationInfo().then((res) => {
+          setUserData((userData) => ({
+            ...userData,
+            fullRegistration: true,
+            ticket: {
+              ...res.data,
+            },
+          }));
+        });
       } else {
-        reservation.getReservationInfo()
-          .then((res) => {
-            setUserData((userData) => ({
-              ...userData,
-              fullRegistration: false,
-              ticket: {
-                ...res.data
-              }
-            }));
-          });
+        reservation.getReservationInfo().then((res) => {
+          setUserData((userData) => ({
+            ...userData,
+            fullRegistration: false,
+            ticket: {
+              ...res.data,
+            },
+          }));
+        });
       }
     });
   }, []);
@@ -71,6 +65,10 @@ export default function Dashboard() {
 
           <Route path={`${match.path}/hotel`} exact>
             <Hotel />
+          </Route>
+
+          <Route path={`${match.path}/hotel/reserved`} exact>
+            <ReservationReview />
           </Route>
 
           <Route path={`${match.path}/activities`} exact>
@@ -100,6 +98,4 @@ const Container = styled.div`
     height: calc(100vh - 80px);
     padding: 20px;
   }
-
-
 `;

@@ -11,10 +11,10 @@ import HotelOptions from "../../../components/Hotel/HotelOptions";
 import HotelContext from "../../../contexts/HotelContext";
 import RoomOptions from "../../../components/Hotel/Room/RoomOptions";
 import HotelReservationContext from "../../../contexts/HotelReservationContext";
-import ReservationReview from "./ReservationReview";
 import { toast } from "react-toastify";
 import Button from "../../../components/Form/Button";
 import Title from "../../../components/shared/Title";
+import { useHistory } from "react-router-dom";
 
 export default function Hotel() {
   const { userData, setUserData } = useContext(UserContext);
@@ -26,9 +26,9 @@ export default function Hotel() {
   const [hotelIsLoading, setHotelIsLoading] = useState(false);
   const hotelRef = useRef();
   const api = useApi();
+  const history = useHistory();
 
   useEffect(() => {
-    getReservation();
     const actualHotelData = hotels?.find(
       (hotel) => hotel?.id === hotelData?.id
     );
@@ -49,7 +49,6 @@ export default function Hotel() {
       .getAllHotels()
       .then((response) => {
         setHotels(response.data);
-        getReservation();
       })
       .catch((error) => {
         console.error(error);
@@ -59,13 +58,6 @@ export default function Hotel() {
   function getReservation() {
     api.hotel.getHotelReservation(userData.user.id).then((response) => {
       setHotelReservationData(response.data);
-      if (hotelReservationData) {
-        setUserData({
-          ...userData,
-          hotelId: hotelReservationData.hotel.id,
-          roomId: hotelReservationData.room.id,
-        });
-      }
     });
   }
 
@@ -75,7 +67,13 @@ export default function Hotel() {
       .makeReservation(hotelData.id, hotelData.roomSelected.id)
       .then(() => {
         toast("Quarto reservado");
-        getHotels();
+        getReservation();
+        setUserData({
+          ...userData,
+          hotelId: hotelData.id,
+          roomId: hotelData.roomSelected.id,
+        });
+        history.push("/dashboard/hotel/reserved");
       })
       .catch((error) => {
         console.error(error);
@@ -92,16 +90,17 @@ export default function Hotel() {
         userData.ticket.type === "hotel" ? (
           <>
             {hotelReservationData ? (
-              <ReservationReview
-                hotelReservationData={hotelReservationData}
-                setHotelReservationData={setHotelReservationData}
-              />
+              history.push("/dashboard/hotel/reserved")
             ) : (
               <>
                 <h2>Primeiro, escolha seu hotel</h2>
                 {hotels ? <HotelOptions hotels={hotels} /> : ""}
-                {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
-                {hotelData?.roomSelected ? (
+                {hotelData && hotels ? (
+                  <RoomOptions rooms={hotelData.rooms} />
+                ) : (
+                  ""
+                )}
+                {hotelData?.roomSelected && hotels ? (
                   <ChangeButton
                     onClick={makeReservation}
                     disabled={hotelIsLoading}
