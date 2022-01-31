@@ -19,6 +19,7 @@ import "react-credit-cards/es/styles-compiled.css";
 
 import { Ticket } from "./Ticket";
 import { Confirmation } from "./Confirmation";
+import { SecureMessage } from "./SecureMessage";
 
 import useApi from "../../hooks/useApi";
 
@@ -163,6 +164,7 @@ export default function PaymentForm({ userOrder }) {
               {dynamicInputIsLoading ? "Processando..." : "Finalizar Pagamento"}
             </Button>
           </SubmitContainer>
+          <SecureMessage />
         </FormWrapper>
       ) : (
         <Confirmation />
