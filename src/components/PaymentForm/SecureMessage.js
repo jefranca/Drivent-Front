@@ -16,7 +16,7 @@ export const SecureMessage = () => {
 const LockIcon = styled(AiFillLock)`
   font-size: 20px;
   width: 30px;
-  margin: 0 5px;
+  margin: 0 4px;
   color: green;
 `;
 
