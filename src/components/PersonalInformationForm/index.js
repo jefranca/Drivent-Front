@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MenuItem from "@material-ui/core/MenuItem";
+import { useHistory } from "react-router-dom";
 
 import useApi from "../../hooks/useApi";
 import { useForm } from "../../hooks/useForm";
@@ -26,6 +27,7 @@ import UserContext from "../../contexts/UserContext";
 dayjs.extend(CustomParseFormat);
 
 export default function PersonalInformationForm() {
+  const history = useHistory();
   const { setUserData } = useContext(UserContext);
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
   const { enrollment, cep } = useApi();
@@ -64,6 +66,7 @@ export default function PersonalInformationForm() {
         .then(() => {
           toast("Salvo com sucesso!");
           setUserData((userData) => ({ ...userData, fullRegistration: true }));
+          history.push("payment");
         })
         .catch((error) => {
           /* eslint-disable-next-line no-console */

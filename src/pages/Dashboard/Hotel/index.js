@@ -15,8 +15,10 @@ import ReservationReview from "./ReservationReview";
 import { toast } from "react-toastify";
 import Button from "../../../components/Form/Button";
 import Title from "../../../components/shared/Title";
+import { useHistory } from "react-router-dom";
 
 export default function Hotel() {
+  const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
   const { hotelData, setHotelData } = useContext(HotelContext);
   const { hotelReservationData, setHotelReservationData } = useContext(
@@ -76,6 +78,7 @@ export default function Hotel() {
       .then(() => {
         toast("Quarto reservado");
         getHotels();
+        history.push("activities");
       })
       .catch((error) => {
         console.error(error);
