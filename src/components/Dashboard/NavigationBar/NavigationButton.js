@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function NavigationButton({ active, children, onClick }) {
+export default function NavigationButton({ active, children, onClick, width, desktop }) {
   return (
-    <Button active={active} onClick={onClick}>
+    <Button active={active} onClick={onClick} width={width} desktop={desktop}>
       {children}
     </Button>
   );
@@ -36,5 +36,9 @@ const Button = styled.button`
 
   @media (max-width: 600px) {
     height: 80px;
+    width: ${({ width }) => width || "100%"} !important;
+    ${({ desktop }) => desktop? `
+      display: none;
+    `: ""}
   }
 `;
