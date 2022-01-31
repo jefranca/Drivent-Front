@@ -73,6 +73,7 @@ export default function Hotel() {
           hotelId: hotelData.id,
           roomId: hotelData.roomSelected.id,
         });
+        history.push("/dashboard/hotel/reserved");
       })
       .catch((error) => {
         console.error(error);
