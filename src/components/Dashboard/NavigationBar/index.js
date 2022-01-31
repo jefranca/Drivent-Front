@@ -1,7 +1,6 @@
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
 import { useContext } from "react";
 import UserContext from "../../../contexts/UserContext";
-
 import styled from "styled-components";
 
 import {
@@ -12,54 +11,67 @@ import {
   FaCertificate,
 } from "react-icons/fa";
 
+import { IoLogOut } from "react-icons/io5";
+
 import NavigationButton from "./NavigationButton";
 
 export default function NavigationBar() {
   const location = useLocation();
   const match = useRouteMatch();
-  const { userData } = useContext(UserContext);
+  const { userData, setUserData } = useContext(UserContext);
+
+  const logout = () => {
+    setUserData({});
+  };
 
   function isActive(buttonPath) {
     return location.pathname === buttonPath;
   }
 
   return (
-    <Container>
-      <ConditionalLink to={`${match.path}/subscription`}>
-        <NavigationButton active={isActive(`${match.path}/subscription`)}>
-          <EnrollIcon />
-          <span>Inscrição</span>
-        </NavigationButton>
-      </ConditionalLink>
+    <Menu>
+      <Container>
+        <ConditionalLink to={`${match.path}/subscription`}>
+          <NavigationButton active={isActive(`${match.path}/subscription`)}>
+            <EnrollIcon />
+            <span>Inscrição</span>
+          </NavigationButton>
+        </ConditionalLink>
 
-      <ConditionalLink to={`${match.path}/payment`} disabled={!userData.fullRegistration}>
-        <NavigationButton active={isActive(`${match.path}/payment`)}>
-          <PaymentIcon />
-          <span>Pagamento</span>
-        </NavigationButton>
-      </ConditionalLink>
+        <ConditionalLink to={`${match.path}/payment`} disabled={!userData.fullRegistration}>
+          <NavigationButton active={isActive(`${match.path}/payment`)}>
+            <PaymentIcon />
+            <span>Pagamento</span>
+          </NavigationButton>
+        </ConditionalLink>
 
-      <ConditionalLink to={`${match.path}/hotel`} disabled={!userData.ticket || userData.ticket.type !== "hotel"}>
-        <NavigationButton active={isActive(`${match.path}/hotel`)}>
-          <HotelIcon />
-          <span>Hotel</span>
-        </NavigationButton>
-      </ConditionalLink>
+        <ConditionalLink to={`${match.path}/hotel`} disabled={!userData.ticket || userData.ticket.type !== "hotel"}>
+          <NavigationButton active={isActive(`${match.path}/hotel`)}>
+            <HotelIcon />
+            <span>Hotel</span>
+          </NavigationButton>
+        </ConditionalLink>
 
-      <ConditionalLink to={`${match.path}/activities`} disabled={!userData.ticket || userData.ticket.type === "online"}>
-        <NavigationButton active={isActive(`${match.path}/activities`)}>
-          <ActivityIcon />
-          <span>Atividades</span>
-        </NavigationButton>
-      </ConditionalLink>
+        <ConditionalLink to={`${match.path}/activities`} disabled={!userData.ticket || userData.ticket.type === "online"}>
+          <NavigationButton active={isActive(`${match.path}/activities`)}>
+            <ActivityIcon />
+            <span>Atividades</span>
+          </NavigationButton>
+        </ConditionalLink>
 
-      <ConditionalLink to={`${match.path}/certificate`} disabled={true}>
-        <NavigationButton active={isActive(`${match.path}/certificate`)}>
-          <CertificateIcon  disabled={true}/>
-          <span>Certificado</span>
-        </NavigationButton>
-      </ConditionalLink>
-    </Container>
+        <ConditionalLink to={`${match.path}/certificate`} disabled={true}>
+          <NavigationButton active={isActive(`${match.path}/certificate`)}>
+            <CertificateIcon  disabled={true}/>
+            <span>Certificado</span>
+          </NavigationButton>
+        </ConditionalLink>
+      </Container>
+
+      <NavigationButton onClick={logout}>
+        <LogoutIcon />
+        <span> Sair </span>
+      </NavigationButton>    
+    </Menu>
   );
 }
 
@@ -72,37 +84,14 @@ const ConditionalLink = styled(Link)`
   }
 `;
 
-const EnrollIcon = styled(FaFileContract)`
-`;
-
-const PaymentIcon = styled(FaMoneyBill)`
-
-`;
-
-const HotelIcon = styled(FaBed)`
-
-`;
-
-const ActivityIcon = styled(FaCalendarWeek)`
-
-`;
-
-const CertificateIcon = styled(FaCertificate)`
-
-`;
-
-const Container = styled.div`
+const Menu = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #ddd;
   box-shadow: 2px 0 10px 0 rgba(0,0,0,0.1);
   width: 100px;
   flex-shrink: 0;
-  justify-content: flex-start;
-
-  > a {
-    text-decoration: none;
-  }
+  justify-content: space-between;
 
   @media (max-width: 600px) {
     width: 100%;
@@ -110,3 +99,17 @@ const Container = styled.div`
     flex-direction: row;
   }
 `;
+
+const Container = styled.div`
+
+  > a {
+      text-decoration: none;
+    }
+`;
+
+const EnrollIcon = styled(FaFileContract)``;
+const PaymentIcon = styled(FaMoneyBill)``;
+const HotelIcon = styled(FaBed)``;
+const ActivityIcon = styled(FaCalendarWeek)``;
+const CertificateIcon = styled(FaCertificate)``;
+const LogoutIcon = styled(IoLogOut)``;
