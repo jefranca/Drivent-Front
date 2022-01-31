@@ -1,4 +1,6 @@
 import { Link, useLocation, useRouteMatch } from "react-router-dom";
+import { useContext } from "react";
+import UserContext from "../../../contexts/UserContext";
 
 import styled from "styled-components";
 
@@ -15,6 +17,7 @@ import NavigationButton from "./NavigationButton";
 export default function NavigationBar() {
   const location = useLocation();
   const match = useRouteMatch();
+  const { userData } = useContext(UserContext);
 
   function isActive(buttonPath) {
     return location.pathname === buttonPath;
@@ -22,43 +25,71 @@ export default function NavigationBar() {
 
   return (
     <Container>
-      <Link to={`${match.path}/subscription`}>
+      <ConditionalLink to={`${match.path}/subscription`}>
         <NavigationButton active={isActive(`${match.path}/subscription`)}>
-          <FaFileContract />
+          <EnrollIcon />
           <span>Inscrição</span>
         </NavigationButton>
-      </Link>
+      </ConditionalLink>
 
-      <Link to={`${match.path}/payment`}>
+      <ConditionalLink to={`${match.path}/payment`} disabled={!userData.fullRegistration}>
         <NavigationButton active={isActive(`${match.path}/payment`)}>
-          <FaMoneyBill />
+          <PaymentIcon />
           <span>Pagamento</span>
         </NavigationButton>
-      </Link>
+      </ConditionalLink>
 
-      <Link to={`${match.path}/hotel`}>
+      <ConditionalLink to={`${match.path}/hotel`} disabled={!userData.ticket || userData.ticket.type !== "hotel"}>
         <NavigationButton active={isActive(`${match.path}/hotel`)}>
-          <FaBed />
+          <HotelIcon />
           <span>Hotel</span>
         </NavigationButton>
-      </Link>
+      </ConditionalLink>
 
-      <Link to={`${match.path}/activities`}>
+      <ConditionalLink to={`${match.path}/activities`} disabled={!userData.ticket || userData.ticket.type === "online"}>
         <NavigationButton active={isActive(`${match.path}/activities`)}>
-          <FaCalendarWeek />
+          <ActivityIcon />
           <span>Atividades</span>
         </NavigationButton>
-      </Link>
+      </ConditionalLink>
 
-      <Link to={`${match.path}/certificate`}>
+      <ConditionalLink to={`${match.path}/certificate`} disabled={true}>
         <NavigationButton active={isActive(`${match.path}/certificate`)}>
-          <FaCertificate />
+          <CertificateIcon  disabled={true}/>
           <span>Certificado</span>
         </NavigationButton>
-      </Link>
+      </ConditionalLink>
     </Container>
   );
 }
+
+const ConditionalLink = styled(Link)`
+  pointer-events: ${({ disabled }) => disabled? "none" : "auto"} !important;
+  & {
+    * {
+        color: ${({ disabled }) => disabled? "gray" : ""} !important;
+    }
+  }
+`;
+
+const EnrollIcon = styled(FaFileContract)`
+`;
+
+const PaymentIcon = styled(FaMoneyBill)`
+
+`;
+
+const HotelIcon = styled(FaBed)`
+
+`;
+
+const ActivityIcon = styled(FaCalendarWeek)`
+
+`;
+
+const CertificateIcon = styled(FaCertificate)`
+
+`;
 
 const Container = styled.div`
   display: flex;

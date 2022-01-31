@@ -17,6 +17,7 @@ import FormValidations from "./FormValidations";
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
+import { useHistory } from "react-router-dom";
 import { Ticket } from "./Ticket";
 import { Confirmation } from "./Confirmation";
 import { SecureMessage } from "./SecureMessage";
@@ -24,6 +25,7 @@ import { SecureMessage } from "./SecureMessage";
 import useApi from "../../hooks/useApi";
 
 export default function PaymentForm({ userOrder }) {
+  const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
   const { reservation } = useApi();
   const ticketTypes = {
@@ -51,6 +53,14 @@ export default function PaymentForm({ userOrder }) {
               ...res.data,
             },
           }));
+          const { type } = res.data;
+          if (type === "hotel") {
+            history.push("hotel");
+          }
+
+          if (type === "presencial") {
+            history.push("activities");
+          }
         })
         .catch((error) => {
           setDynamicInputIsLoading(false);
@@ -179,7 +189,7 @@ const SubTitle = styled(Typography)`
 `;
 
 const SubmitContainer = styled.div`
-  margin-top: 40px !important;
+  margin-top: 20px !important;
   width: 100% !important;
 
   > button {
