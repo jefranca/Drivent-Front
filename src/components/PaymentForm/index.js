@@ -12,7 +12,6 @@ import Input from "../Form/Input";
 import Button from "../Form/Button";
 import { FormWrapper } from "./FormWrapper";
 import { InputWrapper } from "./InputWrapper";
-import { ErrorMsg } from "./ErrorMsg";
 import FormValidations from "./FormValidations";
 
 import Cards from "react-credit-cards";
@@ -105,11 +104,11 @@ export default function PaymentForm({ userOrder }) {
                 style={{ width: "100%" }}
                 maxLength="20"
                 mask="9999 9999 9999 9999"
+                error={errors.number}
                 value={data.number || ""}
                 onChange={handleChange("number")}
                 onSelect={handleChangeSelection("number")}
               />
-              {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
             </InputWrapper>
             <InputWrapper>
               <Input
@@ -117,11 +116,11 @@ export default function PaymentForm({ userOrder }) {
                 name="name"
                 type="text"
                 style={{ width: "100%" }}
+                error={errors.name}
                 value={data.name || ""}
                 onChange={handleChange("name")}
                 onSelect={handleChangeSelection("name")}
               />
-              {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
             </InputWrapper>
 
             <MultiInputWrapper>
@@ -136,11 +135,11 @@ export default function PaymentForm({ userOrder }) {
                     1: "[0-1]",
                     9: "[0-9]",
                   }}
+                  error={errors.expiry}
                   value={data.expiry || ""}
                   onChange={handleChange("expiry")}
                   onSelect={handleChangeSelection("expiry")}
                 />
-                {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
               </InputWrapper>
 
               <InputWrapper width="50%">
@@ -150,11 +149,11 @@ export default function PaymentForm({ userOrder }) {
                   name="cvc"
                   type="text"
                   style={{ width: "90%", marginLeft: "10%" }}
+                  error={errors.cvc}
                   value={data.cvc || ""}
                   onChange={handleChange("cvc")}
                   onSelect={handleChangeSelection("cvc")}
                 />
-                {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
               </InputWrapper>
             </MultiInputWrapper>
           </ContainerFields>

@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useApi from "../../hooks/useApi";
-import SubTitle from "../Dashboard/shared/SubTitle";
+import SubTitle from "../shared/SubTitle";
 
 import ResumeOrder from "./ResumeOrder";
 import Grid from "@material-ui/core/Grid";

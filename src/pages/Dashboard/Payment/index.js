@@ -1,8 +1,8 @@
 import React, { useContext, useState } from "react";
 import TicketForm from "../../../components/TicketForm/index.js";
 import PaymentForm from "../../../components/PaymentForm";
-import UnauthorizedMessage from "../../../components/Dashboard/shared/UnauthorizedMessage";
-import Title from "../../../components/Dashboard/shared/Title";
+import UnauthorizedMessage from "../../../components/shared/UnauthorizedMessage";
+import Title from "../../../components/shared/Title";
 import UserContext from "../../../contexts/UserContext";
 
 export default function Payment() {

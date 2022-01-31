@@ -1,3 +1,5 @@
+import dayjs from "dayjs";
+
 const validations = {
   name: {
     custom: {
@@ -16,7 +18,7 @@ const validations = {
   phone: {
     custom: {
       isValid: (value) => {
-        if (value.length === 16 && value[5] !== "9") {
+        if (value.length === 15 && value[5] !== "9") {
           return false;
         }
 
@@ -67,8 +69,24 @@ const validations = {
 
   birthday: {
     custom: {
-      isValid: (value) => !value || !isNaN(new Date(value?.split("-").reverse().join("-"))),
-      message: "Selecione uma data de aniversário",
+      isValid: (value) => {
+        if (!value) {
+          return false;
+        }
+        const date = value.split("-")[0];
+        const month = Number(value.split("-")[1])-1;
+        const year = value.split("-")[2];
+       
+        const userDate = dayjs().set("year", year).set("month", month).set("date", date);
+        const minDate = dayjs().subtract(13, "year");
+
+        if (dayjs(userDate).isAfter(dayjs(minDate))) {
+          return false;
+        }
+
+        return true;
+      },
+      message: "O usuário deve ter no mínimo 13 anos",
     },
   },
 
