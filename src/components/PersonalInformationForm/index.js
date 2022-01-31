@@ -67,7 +67,7 @@ export default function PersonalInformationForm() {
         })
         .catch((error) => {
           /* eslint-disable-next-line no-console */
-          console.log(error);
+          console.error(error);
 
           if (error.response?.data?.details) {
             for (const detail of error.response.data.details) {

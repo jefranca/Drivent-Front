@@ -18,7 +18,9 @@ const validations = {
   phone: {
     custom: {
       isValid: (value) => {
-        if (value.length === 15 && value[5] !== "9") {
+        const onlyNumbers = value.replace(/[^0-9]+/g, "");
+
+        if (onlyNumbers.length === 12 && onlyNumbers[2] !== "9") {
           return false;
         }
 
