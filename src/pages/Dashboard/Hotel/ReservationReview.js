@@ -11,7 +11,7 @@ export default function ReservationReview() {
     HotelReservationContext
   );
   const history = useHistory();
-
+  console.log(hotelReservationData);
   function getNewRoom() {
     history.push("/dashboard/hotel");
     setHotelReservationData(null);
@@ -22,8 +22,14 @@ export default function ReservationReview() {
       <Title> Escolha de hotel e quarto </Title>
 
       <h2>Você já escolheu seu quarto</h2>
-      <HotelReview hotelReservationData={hotelReservationData} />
-      <ChangeButton onClick={getNewRoom}>trocar de quarto</ChangeButton>
+      {hotelReservationData ? (
+        <>
+          <HotelReview hotelReservationData={hotelReservationData} />
+          <ChangeButton onClick={getNewRoom}>trocar de quarto</ChangeButton>
+        </>
+      ) : (
+        ""
+      )}
     </Container>
   );
 }
