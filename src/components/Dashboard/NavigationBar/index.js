@@ -39,7 +39,7 @@ export default function NavigationBar() {
         </NavigationButton>
       </ConditionalLink>
 
-      <ConditionalLink to={`${match.path}/hotel`} disabled={!userData.ticket || !userData.ticket.type === "hotel"}>
+      <ConditionalLink to={`${match.path}/hotel`} disabled={!userData.ticket || userData.ticket.type !== "hotel"}>
         <NavigationButton active={isActive(`${match.path}/hotel`)}>
           <HotelIcon />
           <span>Hotel</span>

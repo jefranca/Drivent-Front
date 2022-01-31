@@ -179,7 +179,7 @@ const SubTitle = styled(Typography)`
 `;
 
 const SubmitContainer = styled.div`
-  margin-top: 40px !important;
+  margin-top: 20px !important;
   width: 100% !important;
 
   > button {
