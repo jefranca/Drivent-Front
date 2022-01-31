@@ -1,8 +1,8 @@
 import styled from "styled-components";
 
-export default function NavigationButton({ active, children }) {
+export default function NavigationButton({ active, children, onClick }) {
   return (
-    <Button active={active}>
+    <Button active={active} onClick={onClick}>
       {children}
     </Button>
   );
