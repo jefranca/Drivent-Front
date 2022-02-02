@@ -34,6 +34,7 @@ export default function Activities() {
     if (day !== undefined) {
       let date = day.split("/");
       let correctDate = `${date[2]}-${date[1]}-${date[0]}`;
+    
       setSelected(day);
       getActivities(correctDate);
     }
@@ -53,6 +54,7 @@ export default function Activities() {
         });
         setDates(newDates2);
         setWeekDay(weekdays);
+        setDay(newDates2[0]);
       }),
     []
   );
