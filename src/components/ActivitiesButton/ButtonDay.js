@@ -1,6 +1,13 @@
 import styled from "styled-components";
 
-export default function ButtonDay({ date, setDay, day, select, weekDay, index }) {
+export default function ButtonDay({
+  date,
+  setDay,
+  day,
+  select,
+  weekDay,
+  index,
+}) {
   const weekdays = [
     "Domingo",
     "Segunda",
@@ -36,4 +43,9 @@ const DayButton = styled.div`
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   font-size: 14px;
   cursor: pointer;
+  @media (max-width: 600px) {
+    font-size: 12px;
+    margin-right: 12px;
+    text-align: center;
+  }
 `;
