@@ -49,7 +49,11 @@ export default function ActivitiesTable({ columns, getActivities, day }) {
   );
 }
 
-const ContainerActivities = styled.div``;
+const ContainerActivities = styled.div`
+  background-color: red;
+  padding: 20px;
+  height: auto;
+`;
 
 const Table = styled.div`
   display: grid;
