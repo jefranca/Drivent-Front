@@ -98,7 +98,7 @@ const Menu = styled.div`
     height: 80px;
     flex-direction: row;
     align-items: space-between;
-  }
+}
 `;
 
 const Container = styled.div`
