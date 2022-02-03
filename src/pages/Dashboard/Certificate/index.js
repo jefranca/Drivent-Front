@@ -9,13 +9,14 @@ import EventInfoContext from "../../../contexts/EventInfoContext";
 import useApi from "../../../hooks/useApi";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
+import Loading from "../../../components/shared/Loading";
 
 export default function Certificate() {
   const { userData } = useContext(UserContext);
   const { eventInfo } = useContext(EventInfoContext);
   const { enrollment, activity } = useApi();
-  const [userName, setUserName] = useState("");
-  const [activitiesData, setActivitiesData] = useState({});
+  const [userName, setUserName] = useState(false);
+  const [activitiesData, setActivitiesData] = useState(false);
   const [isDownloading, setIsDownloading] = useState(false);
   const certificateRef = useRef();
 
@@ -53,6 +54,15 @@ export default function Certificate() {
   }, []);
 
   const type = userData.ticket === "online"? "online" : "presencial";
+
+  if (!activitiesData && !userName) {
+    return (
+      <>
+        <Title> Certificação </Title>
+        <Loading/>
+      </>
+    );
+  }
 
   return (
     <>
