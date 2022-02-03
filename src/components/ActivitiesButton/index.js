@@ -23,6 +23,6 @@ const DaysMenu = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
-  margin-bottom: 10px;
+  margin-bottom: 40px;
   width: 100%;
 `;

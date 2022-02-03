@@ -7,6 +7,7 @@ import dayjs from "dayjs";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MenuItem from "@material-ui/core/MenuItem";
+import { useHistory } from "react-router-dom";
 
 import useApi from "../../hooks/useApi";
 import { useForm } from "../../hooks/useForm";
@@ -17,7 +18,6 @@ import Select from "../../components/Form/Select";
 import { FormWrapper } from "./FormWrapper";
 import { CustomDatePicker } from "./CustomDatePicker";
 import { InputWrapper } from "./InputWrapper";
-import { ErrorMsg } from "./ErrorMsg";
 import { ufList } from "./ufList";
 import FormValidations from "./FormValidations";
 
@@ -27,6 +27,7 @@ import UserContext from "../../contexts/UserContext";
 dayjs.extend(CustomParseFormat);
 
 export default function PersonalInformationForm() {
+  const history = useHistory();
   const { setUserData } = useContext(UserContext);
   const [dynamicInputIsLoading, setDynamicInputIsLoading] = useState(false);
   const { enrollment, cep } = useApi();
@@ -35,6 +36,7 @@ export default function PersonalInformationForm() {
     handleChange,
     data,
     errors,
+    setErrors,
     setData,
     customHandleChange,
   } = useForm({
@@ -56,7 +58,7 @@ export default function PersonalInformationForm() {
         },
         phone: data.phone
           .replace(/[^0-9]+/g, "")
-          .replace(/^(\d{2})(9?\d{4})(\d{4})$/, "($1) $2-$3"),
+          .replace(/^(\d{2})([0-9]?\d{4})(\d{4})$/, "($1) $2-$3"),
       };
 
       enrollment
@@ -64,15 +66,24 @@ export default function PersonalInformationForm() {
         .then(() => {
           toast("Salvo com sucesso!");
           setUserData((userData) => ({ ...userData, fullRegistration: true }));
+          history.push("payment");
         })
         .catch((error) => {
+          /* eslint-disable-next-line no-console */
+          console.error(error);
+
           if (error.response?.data?.details) {
             for (const detail of error.response.data.details) {
               toast(detail);
             }
-          } else {
-            toast("Não foi possível");
+            return;
+          } 
+
+          if (error.response.status === 409) {
+            setErrors((data) => ({ ...data, cpf: "Este CPF já está cadastrado" }));
+            return;
           }
+          toast("Não foi possível");
           /* eslint-disable-next-line no-console */
           console.error(error);
         });
@@ -154,12 +165,12 @@ export default function PersonalInformationForm() {
           <InputWrapper>
             <Input
               label="Nome Completo"
+              error={errors.name}
               name="name"
               type="text"
               value={data.name || ""}
               onChange={handleChange("name")}
             />
-            {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
@@ -168,16 +179,16 @@ export default function PersonalInformationForm() {
               type="text"
               maxLength="14"
               mask="999.999.999-99"
+              error={errors.cpf}
               value={data.cpf || ""}
               onChange={handleChange("cpf")}
             />
-            {errors.cpf && <ErrorMsg>{errors.cpf}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <CustomDatePicker
               name="birthday"
-              error={false}
-              helperText={null}
+              error={Boolean(errors.birthday)}
+              helperText={errors.birthday}
               format="dd-MM-yyyy"
               label="Data de Nascimento"
               inputVariant="outlined"
@@ -192,38 +203,38 @@ export default function PersonalInformationForm() {
                 )(date);
               }}
             />
-            {errors.birthday && <ErrorMsg>{errors.birthday}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="Telefone"
               mask={
-                data.phone.length < 15 ? "(99) 9999-99999" : "(99) 99999-9999"
-              } // o 9 extra no primeiro é para permitir digitar um número a mais e então passar pra outra máscara - gambiarra? temos
+                data.phone.length < 15 ? "(99) 9999-999999" : "(99) 99999-9999"
+              }
               name="phone"
+              error={errors.phone}
               value={data.phone || ""}
               onChange={handleChange("phone")}
             />
-            {errors.phone && <ErrorMsg>{errors.phone}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="CEP"
               name="cep"
               mask="99999-999"
+              error={errors.cep}
               value={data.cep || ""}
               onChange={(e) => {
                 handleChange("cep")(e);
                 handleCepChanges(e);
               }}
             />
-            {errors.cep && <ErrorMsg>{errors.cep}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Select
               label="Estado"
               name="state"
               id="state"
+              error={errors.state}
               value={data.state || ""}
               onChange={handleChange("state")}
             >
@@ -236,48 +247,48 @@ export default function PersonalInformationForm() {
                 </MenuItem>
               ))}
             </Select>
-            {errors.state && <ErrorMsg>{errors.state}</ErrorMsg>}
           </InputWrapper>
 
           <InputWrapper>
             <Input
               label="Cidade"
               name="city"
+              error={errors.city}
               value={data.city || ""}
               onChange={handleChange("city")}
               disabled={dynamicInputIsLoading}
             />
-            {errors.city && <ErrorMsg>{errors.city}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="Rua"
               name="street"
+              error={errors.street}
               value={data.street || ""}
               onChange={handleChange("street")}
               disabled={dynamicInputIsLoading}
             />
-            {errors.street && <ErrorMsg>{errors.street}</ErrorMsg>}
           </InputWrapper>
 
           <InputWrapper>
             <Input
               label="Número"
               name="number"
+              error={errors.number}
               value={data.number || ""}
               onChange={handleChange("number")}
+              disabled={dynamicInputIsLoading}
             />
-            {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input
               label="Bairro"
               name="neighborhood"
+              error={errors.neighborhood}
               value={data.neighborhood || ""}
               onChange={handleChange("neighborhood")}
               disabled={dynamicInputIsLoading}
             />
-            {errors.neighborhood && <ErrorMsg>{errors.neighborhood}</ErrorMsg>}
           </InputWrapper>
           <InputWrapper>
             <Input

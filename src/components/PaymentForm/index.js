@@ -12,18 +12,20 @@ import Input from "../Form/Input";
 import Button from "../Form/Button";
 import { FormWrapper } from "./FormWrapper";
 import { InputWrapper } from "./InputWrapper";
-import { ErrorMsg } from "./ErrorMsg";
 import FormValidations from "./FormValidations";
 
 import Cards from "react-credit-cards";
 import "react-credit-cards/es/styles-compiled.css";
 
+import { useHistory } from "react-router-dom";
 import { Ticket } from "./Ticket";
 import { Confirmation } from "./Confirmation";
+import { SecureMessage } from "./SecureMessage";
 
 import useApi from "../../hooks/useApi";
 
 export default function PaymentForm({ userOrder }) {
+  const history = useHistory();
   const { userData, setUserData } = useContext(UserContext);
   const { reservation } = useApi();
   const ticketTypes = {
@@ -51,6 +53,14 @@ export default function PaymentForm({ userOrder }) {
               ...res.data,
             },
           }));
+          const { type } = res.data;
+          if (type === "hotel") {
+            history.push("hotel");
+          }
+
+          if (type === "presencial") {
+            history.push("activities");
+          }
         })
         .catch((error) => {
           setDynamicInputIsLoading(false);
@@ -105,11 +115,11 @@ export default function PaymentForm({ userOrder }) {
                 style={{ width: "100%" }}
                 maxLength="20"
                 mask="9999 9999 9999 9999"
+                error={errors.number}
                 value={data.number || ""}
                 onChange={handleChange("number")}
                 onSelect={handleChangeSelection("number")}
               />
-              {errors.number && <ErrorMsg>{errors.number}</ErrorMsg>}
             </InputWrapper>
             <InputWrapper>
               <Input
@@ -117,11 +127,11 @@ export default function PaymentForm({ userOrder }) {
                 name="name"
                 type="text"
                 style={{ width: "100%" }}
+                error={errors.name}
                 value={data.name || ""}
                 onChange={handleChange("name")}
                 onSelect={handleChangeSelection("name")}
               />
-              {errors.name && <ErrorMsg>{errors.name}</ErrorMsg>}
             </InputWrapper>
 
             <MultiInputWrapper>
@@ -136,11 +146,11 @@ export default function PaymentForm({ userOrder }) {
                     1: "[0-1]",
                     9: "[0-9]",
                   }}
+                  error={errors.expiry}
                   value={data.expiry || ""}
                   onChange={handleChange("expiry")}
                   onSelect={handleChangeSelection("expiry")}
                 />
-                {errors.expiry && <ErrorMsg>{errors.expiry}</ErrorMsg>}
               </InputWrapper>
 
               <InputWrapper width="50%">
@@ -150,11 +160,11 @@ export default function PaymentForm({ userOrder }) {
                   name="cvc"
                   type="text"
                   style={{ width: "90%", marginLeft: "10%" }}
+                  error={errors.cvc}
                   value={data.cvc || ""}
                   onChange={handleChange("cvc")}
                   onSelect={handleChangeSelection("cvc")}
                 />
-                {errors.cvc && <ErrorMsg>{errors.cvc}</ErrorMsg>}
               </InputWrapper>
             </MultiInputWrapper>
           </ContainerFields>
@@ -164,6 +174,7 @@ export default function PaymentForm({ userOrder }) {
               {dynamicInputIsLoading ? "Processando..." : "Finalizar Pagamento"}
             </Button>
           </SubmitContainer>
+          <SecureMessage />
         </FormWrapper>
       ) : (
         <Confirmation />
@@ -178,7 +189,7 @@ const SubTitle = styled(Typography)`
 `;
 
 const SubmitContainer = styled.div`
-  margin-top: 40px !important;
+  margin-top: 20px !important;
   width: 100% !important;
 
   > button {
