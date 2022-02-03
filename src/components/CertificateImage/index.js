@@ -18,7 +18,6 @@ export default function Certificate({ name, event, year, startDay, startMonth, e
     12: "Dezembro" 
   };
 
-  console.log(border);
   return (
     <MarginWrap border={border}>
       <Container>
