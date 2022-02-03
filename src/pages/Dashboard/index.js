@@ -1,15 +1,12 @@
 import { useContext, useEffect } from "react";
-import {
-  Switch,
-  Route,
-  Redirect,
-  useRouteMatch
-} from "react-router-dom";
+import { Switch, Route, Redirect, useRouteMatch } from "react-router-dom";
 import styled from "styled-components";
+import { IoLogOut } from "react-icons/io5";
 
 import EventInfoContext from "../../contexts/EventInfoContext";
 
 import NavigationBar from "../../components/Dashboard/NavigationBar";
+import NavigationButton from "../../components/Dashboard/NavigationBar/NavigationButton";
 
 import DashboardLayout from "../../layouts/Dashboard";
 import FillSubscription from "./FillSubscription";
@@ -28,38 +25,42 @@ export default function Dashboard() {
   const { enrollment, reservation } = useApi();
 
   useEffect(() => {
-    enrollment.getPersonalInformations().then(response => {
+    enrollment.getPersonalInformations().then((response) => {
       if (response.data) {
-        reservation.getReservationInfo()
-          .then((res) => {
-            setUserData((userData) => ({
-              ...userData,
-              fullRegistration: true,
-              ticket: {
-                ...res.data
-              }
-            }));
-          });
+        reservation.getReservationInfo().then((res) => {
+          setUserData((userData) => ({
+            ...userData,
+            fullRegistration: true,
+            ticket: {
+              ...res.data,
+            },
+          }));
+        });
       } else {
-        reservation.getReservationInfo()
-          .then((res) => {
-            setUserData((userData) => ({
-              ...userData,
-              fullRegistration: false,
-              ticket: {
-                ...res.data
-              }
-            }));
-          });
+        reservation.getReservationInfo().then((res) => {
+          setUserData((userData) => ({
+            ...userData,
+            fullRegistration: false,
+            ticket: {
+              ...res.data,
+            },
+          }));
+        });
       }
     });
   }, []);
 
+  const logout = () => {
+    setUserData({});
+  };
   return (
     <DashboardLayout background={eventInfo.backgroundImage}>
       <NavigationBar />
 
       <Container>
+        <NavigationButton onClick={logout} mobile={true}>
+          <LogoutIcon />
+        </NavigationButton>
         <Switch>
           <Route path={`${match.path}/subscription`} exact>
             <FillSubscription />
@@ -99,7 +100,12 @@ const Container = styled.div`
   @media (max-width: 600px) {
     height: calc(100vh - 80px);
     padding: 20px;
+    position: relative;
   }
-
-
+`;
+const LogoutIcon = styled(IoLogOut)`
+  @media (max-width: 600px) {
+    width: 60%;
+    height: 60%;
+  }
 `;

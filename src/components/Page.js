@@ -22,5 +22,6 @@ export default styled.div`
 
   @media (max-width: 600px) {
     padding: 0;
+    position:relative;
   }
 `;
