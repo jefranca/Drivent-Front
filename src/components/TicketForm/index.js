@@ -7,6 +7,7 @@ import SubTitle from "../shared/SubTitle";
 import ResumeOrder from "./ResumeOrder";
 import Grid from "@material-ui/core/Grid";
 import Ticket from "./Ticket";
+import Loading from "../shared/Loading";
 
 export default function PaymentInfo({ setIsTicketChosen, userOrder, setUserOrder }) {
   const { ticket } = useApi();
@@ -27,7 +28,7 @@ export default function PaymentInfo({ setIsTicketChosen, userOrder, setUserOrder
   }, []);
   
   if (!tickets.presencial) {
-    return "Carregando . . .";
+    return <Loading/>;
   }
   /*
   function reserveTicket() {

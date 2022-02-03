@@ -8,6 +8,7 @@ import UnauthorizedMessage from "../../../components/shared/UnauthorizedMessage"
 import ActivitiesDays from "../../../components/ActivitiesButton";
 import ActivitiesTable from "../../../components/ActivitiesTable";
 import useApi from "../../../hooks/useApi";
+import Loading from "../../../components/shared/Loading";
 
 export default function Activities() {
   const { userData } = useContext(UserContext);
@@ -17,6 +18,7 @@ export default function Activities() {
   const [day, setDay] = useState();
   const [weekDay, setWeekDay] = useState([]);
   const [selected, setSelected] = useState([]);
+  const [isButtonDisabled, setIsButtonDisabled]= useState(false);
 
   function getActivities(date) {
     activity
@@ -78,13 +80,25 @@ export default function Activities() {
               ) : (
                 ""
               )}
-              <ActivitiesDays
-                selected={selected}
-                dates={dates}
-                weekDay={weekDay}
-                setDay={setDay}
-                day={day}
-              />
+              {dates.length ? 
+                <ActivitiesDays
+                  selected={selected}
+                  dates={dates}
+                  weekDay={weekDay}
+                  setDay={setDay}
+                  day={day}
+                  isButtonDisabled={isButtonDisabled}
+                  setIsButtonDisabled={setIsButtonDisabled}
+                />
+                :
+                <Loading/>
+              }
+              {
+                isButtonDisabled ? 
+                  <Loading/>
+                  :
+                  ""
+              }
               <ActivitiesTable
                 columns={columns}
                 getActivities={getActivities}
