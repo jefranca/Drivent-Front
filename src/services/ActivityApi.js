@@ -18,6 +18,14 @@ export default class ActivityApi extends AuthenticatedApi {
     });
   }
 
+  getActivitiesData() {
+    return api.get("/activities/data", {
+      headers: {
+        ...this.getAuthorizationHeader(),
+      },
+    });
+  }
+
   getActivitiesReservation() {
     return api.get("/activities-reservation", {
       headers: {
