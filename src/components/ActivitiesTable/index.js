@@ -60,5 +60,6 @@ const Table = styled.div`
   @media (max-width: 600px) {
     display: flex;
     flex-direction: column;
+    height: auto;
   }
 `;
