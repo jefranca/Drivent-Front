@@ -2,7 +2,7 @@ import styled from "styled-components";
 import Typography from "@material-ui/core/Typography";
 import signature from "../../assets/images/signature.png";
 
-export default function Certificate({ name, event, year, startDay, startMonth, endDay, endMonth, type, hours, imgSrc }) {
+export default function Certificate({ name, event, year, startDay, startMonth, endDay, endMonth, type, hours, imgSrc, border }) {
   const months = { 
     1: "Janeiro",
     2: "Fevereiro", 
@@ -17,8 +17,10 @@ export default function Certificate({ name, event, year, startDay, startMonth, e
     11: "Novembro",
     12: "Dezembro" 
   };
+
+  console.log(border);
   return (
-    <MarginWrap>
+    <MarginWrap border={border}>
       <Container>
         <Title variant="h5"> CERTIFICADO DE PARTICIPAÇÃO </Title>
         <Name variant="h5"> {name} </Name>
@@ -79,7 +81,7 @@ const Container = styled.div`
 `;
 
 const MarginWrap = styled.div`
-  background: linear-gradient(to right, #FA4098, #FFD77F);
+  background: ${({ border }) => border};
   padding: 20px;
 `;
 
