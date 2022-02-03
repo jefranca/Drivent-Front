@@ -36,9 +36,16 @@ const Button = styled.button`
 
   @media (max-width: 600px) {
     height: 80px;
-    width: ${({ width }) => width || "100%"} !important;
+    width: ${({ width }) => width || "80px"} !important;
     ${({ desktop }) => desktop? `
-      display: none;
+      display:flex;
+      position: fixed;
+      top: 0;
+      left: 80%;
+      z-index:100;
+      span{
+        display: none;
+      }
     `: ""}
   }
 `;
