@@ -59,7 +59,7 @@ export default function NavigationBar() {
           </NavigationButton>
         </ConditionalLink>
 
-        <ConditionalLink to={`${match.path}/certificate`} disabled={true}>
+        <ConditionalLink to={`${match.path}/certificate`} disabled={!userData.ticket}>
           <NavigationButton active={isActive(`${match.path}/certificate`)}>
             <CertificateIcon  disabled={true}/>
             <span>Certificado</span>
