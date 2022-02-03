@@ -18,7 +18,7 @@ export default function Activities() {
   const [day, setDay] = useState();
   const [weekDay, setWeekDay] = useState([]);
   const [selected, setSelected] = useState([]);
-  const [isButtonDisabled, setIsButtonDisabled]= useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
   function getActivities(date) {
     activity
@@ -78,7 +78,7 @@ export default function Activities() {
               ) : (
                 ""
               )}
-              {dates.length ? 
+              {dates.length ? (
                 <ActivitiesDays
                   selected={selected}
                   dates={dates}
@@ -88,15 +88,10 @@ export default function Activities() {
                   isButtonDisabled={isButtonDisabled}
                   setIsButtonDisabled={setIsButtonDisabled}
                 />
-                :
-                <Loading/>
-              }
-              {
-                isButtonDisabled ? 
-                  <Loading/>
-                  :
-                  ""
-              }
+              ) : (
+                <Loading />
+              )}
+              {isButtonDisabled ? <Loading /> : ""}
               <ActivitiesTable
                 columns={columns}
                 getActivities={getActivities}
@@ -123,6 +118,9 @@ const Container = styled.div`
     color: #8e8e8e;
     font-size: 20px;
     margin-bottom: 18px;
+  }
+  @media (max-width: 600px) {
+    overflow-y: auto;
   }
 `;
 
