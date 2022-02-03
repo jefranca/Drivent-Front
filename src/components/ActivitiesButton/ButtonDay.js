@@ -7,6 +7,8 @@ export default function ButtonDay({
   select,
   weekDay,
   index,
+  isButtonDisabled,
+  setIsButtonDisabled,
 }) {
   const weekdays = [
     "Domingo",
@@ -20,8 +22,13 @@ export default function ButtonDay({
   const checker = [select, day];
   return (
     <DayButton
+      disabled={isButtonDisabled}
       onClick={() => {
+        setIsButtonDisabled(true);
         setDay(date);
+        setInterval(() => {
+          setIsButtonDisabled(false);
+        }, 1000);
       }}
       checker={checker}
     >
@@ -30,7 +37,7 @@ export default function ButtonDay({
   );
 }
 
-const DayButton = styled.div`
+const DayButton = styled.button`
   display: flex;
   margin-right: 18px;
   justify-content: center;
@@ -42,6 +49,7 @@ const DayButton = styled.div`
   border-radius: 4px;
   box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.25);
   font-size: 14px;
+  border: none;
   cursor: pointer;
   @media (max-width: 600px) {
     font-size: 12px;
