@@ -1,6 +1,13 @@
+/* eslint-disable indent */
 import styled from "styled-components";
 
-export default function NavigationButton({ active, children, onClick, width, desktop }) {
+export default function NavigationButton({
+  active,
+  children,
+  onClick,
+  width,
+  desktop,
+}) {
   return (
     <Button active={active} onClick={onClick} width={width} desktop={desktop}>
       {children}
@@ -19,7 +26,7 @@ const Button = styled.button`
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  ${props => props.active ? "background-color: #ccc;" : ""}
+  ${(props) => (props.active ? "background-color: #ccc;" : "")}
 
   &:hover {
     background-color: #ccc;
@@ -37,7 +44,9 @@ const Button = styled.button`
   @media (max-width: 600px) {
     height: 80px;
     width: ${({ width }) => width || "80px"} !important;
-    ${({ desktop }) => desktop? `
+    ${({ desktop }) =>
+      desktop
+        ? `
       display:flex;
       position: fixed;
       top: 0;
@@ -46,6 +55,7 @@ const Button = styled.button`
       span{
         display: none;
       }
-    `: ""}
+    `
+        : ""}
   }
 `;

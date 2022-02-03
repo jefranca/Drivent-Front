@@ -49,7 +49,15 @@ export default function ActivitiesTable({ columns, getActivities, day }) {
   );
 }
 
-const ContainerActivities = styled.div``;
+const ContainerActivities = styled.div`
+  @media (max-width: 600px) {
+    height: 360px;
+    overflow-y: auto;
+    ::-webkit-scrollbar {
+      width: 5px;
+    }
+  }
+`;
 
 const Table = styled.div`
   display: grid;
