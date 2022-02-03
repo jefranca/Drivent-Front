@@ -28,7 +28,6 @@ const ColumContent = styled.div`
   border-left: ${({ index }) => (index === 0 ? "1px solid #D7D7D7" : "")};
   @media (max-width: 600px) {
     border-left: 1px solid #d7d7d7;
-    max-height: 300px;
     overflow-y: auto;
   }
 `;
