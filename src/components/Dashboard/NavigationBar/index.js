@@ -38,21 +38,30 @@ export default function NavigationBar() {
           </NavigationButton>
         </ConditionalLink>
 
-        <ConditionalLink to={`${match.path}/payment`} disabled={!userData.fullRegistration}>
+        <ConditionalLink
+          to={`${match.path}/payment`}
+          disabled={!userData.fullRegistration}
+        >
           <NavigationButton active={isActive(`${match.path}/payment`)}>
             <PaymentIcon />
             <span>Pagamento</span>
           </NavigationButton>
         </ConditionalLink>
 
-        <ConditionalLink to={`${match.path}/hotel`} disabled={!userData.ticket || userData.ticket.type !== "hotel"}>
+        <ConditionalLink
+          to={`${match.path}/hotel`}
+          disabled={!userData.ticket || userData.ticket.type !== "hotel"}
+        >
           <NavigationButton active={isActive(`${match.path}/hotel`)}>
             <HotelIcon />
             <span>Hotel</span>
           </NavigationButton>
         </ConditionalLink>
 
-        <ConditionalLink to={`${match.path}/activities`} disabled={!userData.ticket || userData.ticket.type === "online"}>
+        <ConditionalLink
+          to={`${match.path}/activities`}
+          disabled={!userData.ticket || userData.ticket.type === "online"}
+        >
           <NavigationButton active={isActive(`${match.path}/activities`)}>
             <ActivityIcon />
             <span>Atividades</span>
@@ -61,7 +70,7 @@ export default function NavigationBar() {
 
         <ConditionalLink to={`${match.path}/certificate`} disabled={!userData.ticket}>
           <NavigationButton active={isActive(`${match.path}/certificate`)}>
-            <CertificateIcon  disabled={true}/>
+            <CertificateIcon disabled={true} />
             <span>Certificado</span>
           </NavigationButton>
         </ConditionalLink>
@@ -70,16 +79,16 @@ export default function NavigationBar() {
       <NavigationButton onClick={logout} desktop={true} width={"80px"}>
         <LogoutIcon />
         <span> Sair </span>
-      </NavigationButton>   
+      </NavigationButton>
     </Menu>
   );
 }
 
 const ConditionalLink = styled(Link)`
-  pointer-events: ${({ disabled }) => disabled? "none" : "auto"} !important;
+  pointer-events: ${({ disabled }) => (disabled ? "none" : "auto")} !important;
   & {
     * {
-        color: ${({ disabled }) => disabled? "gray" : ""} !important;
+      color: ${({ disabled }) => (disabled ? "gray" : "")} !important;
     }
   }
 `;
@@ -88,7 +97,7 @@ const Menu = styled.div`
   display: flex;
   flex-direction: column;
   background-color: #ddd;
-  box-shadow: 2px 0 10px 0 rgba(0,0,0,0.1);
+  box-shadow: 2px 0 10px 0 rgba(0, 0, 0, 0.1);
   width: 100px;
   flex-shrink: 0;
   justify-content: space-between;
@@ -110,8 +119,8 @@ const Container = styled.div`
   }
 
   > a {
-      text-decoration: none;
-    }
+    text-decoration: none;
+  }
 `;
 
 const EnrollIcon = styled(FaFileContract)``;
@@ -120,8 +129,8 @@ const HotelIcon = styled(FaBed)``;
 const ActivityIcon = styled(FaCalendarWeek)``;
 const CertificateIcon = styled(FaCertificate)``;
 const LogoutIcon = styled(IoLogOut)`
-  @media(max-width: 600px){
-    width: 60%;
-    height: 60%;
+  @media (max-width: 600px) {
+    width: 50%;
+    height: 50%;
   }
 `;

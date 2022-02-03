@@ -1,6 +1,15 @@
 import styled from "styled-components";
 
-export default function ButtonDay({ date, setDay, day, select, weekDay, index, isButtonDisabled, setIsButtonDisabled }) {
+export default function ButtonDay({
+  date,
+  setDay,
+  day,
+  select,
+  weekDay,
+  index,
+  isButtonDisabled,
+  setIsButtonDisabled,
+}) {
   const weekdays = [
     "Domingo",
     "Segunda",
@@ -13,11 +22,13 @@ export default function ButtonDay({ date, setDay, day, select, weekDay, index, i
   const checker = [select, day];
   return (
     <DayButton
-      disabled= {isButtonDisabled}
+      disabled={isButtonDisabled}
       onClick={() => {
         setIsButtonDisabled(true);
         setDay(date);
-        setInterval(() => {setIsButtonDisabled(false);}, 1000);
+        setInterval(() => {
+          setIsButtonDisabled(false);
+        }, 1000);
       }}
       checker={checker}
     >
@@ -40,4 +51,9 @@ const DayButton = styled.button`
   font-size: 14px;
   border: none;
   cursor: pointer;
+  @media (max-width: 600px) {
+    font-size: 12px;
+    margin-right: 12px;
+    text-align: center;
+  }
 `;

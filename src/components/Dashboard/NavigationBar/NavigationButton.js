@@ -1,3 +1,4 @@
+/* eslint-disable indent */
 import styled from "styled-components";
 
 export default function NavigationButton({
@@ -9,7 +10,13 @@ export default function NavigationButton({
   mobile,
 }) {
   return (
-    <Button active={active} onClick={onClick} width={width} desktop={desktop} mobile={mobile} >
+    <Button
+      active={active}
+      onClick={onClick}
+      width={width}
+      desktop={desktop}
+      mobile={mobile}
+    >
       {children}
     </Button>
   );
@@ -40,24 +47,26 @@ const Button = styled.button`
     font-size: 28px;
     color: #124090;
   }
-  ${({ mobile }) => mobile ? 
-    " display: none;"
-    : ""}
+  ${({ mobile }) => (mobile ? " display: none;" : "")}
 
   @media (max-width: 600px) {
     height: 80px;
-    
+
     width: ${({ width }) => width || "80px"} !important;
-    ${({ desktop }) => desktop ? `
+    ${({ desktop }) =>
+      desktop
+        ? `
      display: none;
-    `: ""}
-    ${({ mobile }) => mobile ? 
-    ` display:block;
+    `
+        : ""}
+    ${({ mobile }) =>
+      mobile
+        ? ` display:block;
       margin-top: 20px;
       position: absolute;
       top: 0;
       left: 80%;
       z-index: 1;`
-    : ""}
+        : ""}
   }
 `;

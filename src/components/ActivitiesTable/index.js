@@ -57,4 +57,8 @@ const Table = styled.div`
   width: 100%;
   min-height: 390px;
   margin-bottom: 10px;
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+  }
 `;
