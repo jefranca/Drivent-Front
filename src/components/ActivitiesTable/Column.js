@@ -30,7 +30,6 @@ const ColumContent = styled.div`
   @media (max-width: 600px) {
     border-left: 1px solid #d7d7d7;
     height: auto;
-    overflow-y: auto;
   }
 `;
 
