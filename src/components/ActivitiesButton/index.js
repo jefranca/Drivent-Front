@@ -1,9 +1,7 @@
-import { useState } from "react";
 import styled from "styled-components";
 import ButtonDay from "./ButtonDay";
 
-export default function ActivitiesDays({ dates, setDay, day, weekDay }) {
-  const [isButtonDisabled, setIsButtonDisabled]= useState(false);
+export default function ActivitiesDays({ dates, setDay, day, weekDay, isButtonDisabled, setIsButtonDisabled }) {
   return (
     <DaysMenu>
       {dates.map((date, index) => (

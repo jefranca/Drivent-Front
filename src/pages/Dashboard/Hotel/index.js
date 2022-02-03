@@ -16,6 +16,7 @@ import { toast } from "react-toastify";
 import Button from "../../../components/Form/Button";
 import Title from "../../../components/shared/Title";
 import { useHistory } from "react-router-dom";
+import Loading from "../../../components/shared/Loading";
 
 export default function Hotel() {
   const history = useHistory();
@@ -102,7 +103,7 @@ export default function Hotel() {
             ) : (
               <>
                 <h2>Primeiro, escolha seu hotel</h2>
-                {hotels ? <HotelOptions hotels={hotels} /> : ""}
+                {hotels ? <HotelOptions hotels={hotels} /> : <Loading/>}
                 {hotelData ? <RoomOptions rooms={hotelData.rooms} /> : ""}
                 {hotelData?.roomSelected ? (
                   <ChangeButton
