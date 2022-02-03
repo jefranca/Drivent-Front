@@ -30,24 +30,7 @@ export default function PaymentInfo({ setIsTicketChosen, userOrder, setUserOrder
   if (!tickets.presencial) {
     return <Loading/>;
   }
-  /*
-  function reserveTicket() {
-    const body = {
-      isInPerson: !isOnline,
-      hasHotel: !!hasHotel,
-    };
-    reservation
-      .postNewReservation(body)
-      .then((res) => {
-        toast("Ingresso reservado");
-        setReservationData(res.data);
-      })
-      .catch(() => {
-        toast("Algo deu errado!");
-      });
-  }
-*/
-
+  
   return (
     <>
       <SubTitle>

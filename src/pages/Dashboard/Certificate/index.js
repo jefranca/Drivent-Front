@@ -57,27 +57,36 @@ export default function Certificate() {
   return (
     <>
       <Title> Certificação </Title>
-      <CertificateContainer ref={certificateRef} isDownloading={isDownloading}>
-        <CertificateImage
-          name={userName}
-          event={eventInfo.eventTitle}
-          year={activitiesData.year}
-          startDay={activitiesData.startDay}
-          startMonth={activitiesData.startMonth}
-          endDay={activitiesData.endDay}
-          endMonth={activitiesData.endMonth}
-          type={type}
-          hours={activitiesData.totalHours}
-          border={eventInfo.backgroundImage}
-          imgSrc={eventInfo.logoImage}
-        />      
-      </CertificateContainer>
+      {userData.ticket? (
+        <>
+          <CertificateContainer ref={certificateRef} isDownloading={isDownloading}>
+            <CertificateImage
+              name={userName}
+              event={eventInfo.eventTitle}
+              year={activitiesData.year}
+              startDay={activitiesData.startDay}
+              startMonth={activitiesData.startMonth}
+              endDay={activitiesData.endDay}
+              endMonth={activitiesData.endMonth}
+              type={type}
+              hours={activitiesData.totalHours}
+              border={eventInfo.backgroundImage}
+              imgSrc={eventInfo.logoImage}
+            />      
+          </CertificateContainer>
     
-      <SubmitContainer>
-        <Button onClick={handleDownloadPdf}>
+          <SubmitContainer>
+            <Button onClick={handleDownloadPdf}>
           Baixar
-        </Button>
-      </SubmitContainer>
+            </Button>
+          </SubmitContainer>
+        </>
+      ) : (
+        <UnauthorizedMessage>
+          Você precisa ter confirmado pagamento antes de vizualizar o certificado
+        </UnauthorizedMessage>
+      )}
+ 
     </>
   );
 }
