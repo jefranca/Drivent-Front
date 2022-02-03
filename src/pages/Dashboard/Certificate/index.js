@@ -10,6 +10,7 @@ import useApi from "../../../hooks/useApi";
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
 import Loading from "../../../components/shared/Loading";
+import driventLogo from "../../../assets/images/drivent-logo.svg";
 
 export default function Certificate() {
   const { userData } = useContext(UserContext);
@@ -81,7 +82,7 @@ export default function Certificate() {
               type={type}
               hours={activitiesData.totalHours}
               border={eventInfo.backgroundImage}
-              imgSrc={eventInfo.logoImage}
+              imgSrc={driventLogo}
             />      
           </CertificateContainer>
     
