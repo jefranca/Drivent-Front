@@ -119,9 +119,6 @@ const Container = styled.div`
     font-size: 20px;
     margin-bottom: 18px;
   }
-  @media (max-width: 600px) {
-    overflow-y: auto;
-  }
 `;
 
 const BoxMessage = styled.div`
