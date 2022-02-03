@@ -67,10 +67,10 @@ export default function NavigationBar() {
         </ConditionalLink>
       </Container>
 
-      <NavigationButton onClick={logout} desktop={true}>
+      <NavigationButton onClick={logout} desktop={true} width={"80px"}>
         <LogoutIcon />
         <span> Sair </span>
-      </NavigationButton>    
+      </NavigationButton>   
     </Menu>
   );
 }
@@ -119,4 +119,9 @@ const PaymentIcon = styled(FaMoneyBill)``;
 const HotelIcon = styled(FaBed)``;
 const ActivityIcon = styled(FaCalendarWeek)``;
 const CertificateIcon = styled(FaCertificate)``;
-const LogoutIcon = styled(IoLogOut)``;
+const LogoutIcon = styled(IoLogOut)`
+  @media(max-width: 600px){
+    width: 60%;
+    height: 60%;
+  }
+`;
