@@ -19,7 +19,7 @@ const validations = {
     custom: {
       isValid: (value) => {
         const onlyNumbers = value.replace(/[^0-9]+/g, "");
-        if (onlyNumbers.length === 11 && onlyNumbers[2] !== "9") {
+        if (onlyNumbers.length === 12 && onlyNumbers[2] !== "9") {
           return false;
         }
 
