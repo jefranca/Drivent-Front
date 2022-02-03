@@ -29,7 +29,7 @@ export default function Certificate({ name, event, year, startDay, startMonth, e
         </Description>
         <BottomLine>
           <EmitedDate>
-            Rio de Janeiro, {endDay} de {endMonth} {year}
+            Rio de Janeiro, {endDay} de {months[endMonth]} de {year}
           </EmitedDate>
           <LogoContainer>
             <Logo src={imgSrc} alt={event}/>
